@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "414870726349",
+    "project_id": "jelajah-sp",
+    "storage_bucket": "jelajah-sp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414870726349:android:79c43f7fef58d572df6b84",
+        "android_client_info": {
+          "package_name": "com.khrlanamm.jelajahsungaipulai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1NsvI6Bkv1kQPHHGCG0IVdMvM_g5VjDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
