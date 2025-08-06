@@ -14,8 +14,8 @@ android {
         applicationId = "com.khrlanamm.jelajahsungaipulai"
         minSdk = 24
         targetSdk = 36
-        versionCode = 1
-        versionName = "JelajahSungaiPulai.v.alpha1"
+        versionCode = 2
+        versionName = "JelajahSungaiPulai.v.alpha2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

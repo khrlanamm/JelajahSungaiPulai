@@ -12,7 +12,28 @@
           "package_name": "com.khrlanamm.jelajahsungaipulai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "414870726349-ivpre7mn1ijguc9fekrs1a1f2l3mehud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khrlanamm.jelajahsungaipulai",
+            "certificate_hash": "7436cdf010947bf50eab7a97ca9ee24b9c25566a"
+          }
+        },
+        {
+          "client_id": "414870726349-t7b4af0gj9tc4sbs85rft1rcuan8r5bq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khrlanamm.jelajahsungaipulai",
+            "certificate_hash": "3c28fa0395fa5f60b52df4d771f53d5fb05ce817"
+          }
+        },
+        {
+          "client_id": "414870726349-sio9kvlsbt5h88joo9njua91j79nu0bh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB1NsvI6Bkv1kQPHHGCG0IVdMvM_g5VjDE"
@@ -20,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414870726349-sio9kvlsbt5h88joo9njua91j79nu0bh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
