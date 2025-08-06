@@ -1,16 +1,46 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.JelajahSungaiPulai" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+
+    <!-- Base Theme -->
+    <style name="Base.Theme.JelajahSungaiPulai" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+        <!-- Primary -->
+        <item name="colorPrimary">@color/jelajah_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/jelajah_primary_light</item>
+        <item name="colorOnPrimaryContainer">@color/jelajah_primary_dark</item>
+
+        <!-- Secondary -->
+        <item name="colorSecondary">@color/jelajah_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/jelajah_secondary_light</item>
+        <item name="colorOnSecondaryContainer">@color/jelajah_secondary_dark</item>
+
+        <!-- Error -->
+        <item name="colorError">@color/status_error</item>
+        <item name="colorOnError">@color/white</item>
+        <item name="colorErrorContainer">#F9DEDC</item>
+        <item name="colorOnErrorContainer">#410E0B</item>
+
+        <!-- Background & Surface -->
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorSurfaceVariant">@color/background_light</item>
+        <item name="colorOnSurfaceVariant">@color/text_secondary</item>
+        <item name="colorOutline">@color/border_color</item>
     </style>
+
+    <!-- App Theme -->
+    <style name="Theme.JelajahSungaiPulai" parent="Base.Theme.JelajahSungaiPulai" />
+
+    <!-- Splash Theme -->
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/jelajah_primary</item>
+        <!-- Logo kamu -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_logo_scaled</item>
+        <item name="postSplashScreenTheme">@style/Theme.JelajahSungaiPulai</item>
+    </style>
+
 </resources>
