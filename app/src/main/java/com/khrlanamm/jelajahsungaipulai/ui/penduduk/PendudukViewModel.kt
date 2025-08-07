@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class PenduduklViewModel : ViewModel() {
+class PendudukViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is penduduk Fragment"

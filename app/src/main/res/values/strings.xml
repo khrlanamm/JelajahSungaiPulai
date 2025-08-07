@@ -4,6 +4,9 @@
     <string name="title_nagari">Nagari</string>
     <string name="title_kampung">Kampung</string>
     <string name="title_penduduk">Penduduk</string>
+    <string name="action_nagari">Profil Nagari</string>
+    <string name="action_kampung">Profil Kampung</string>
+    <string name="action_penduduk">Profil Penduduk</string>
 
     <!-- Strings for AuthActivity -->
     <string name="welcome_greeting">Selamat Datang,</string>
