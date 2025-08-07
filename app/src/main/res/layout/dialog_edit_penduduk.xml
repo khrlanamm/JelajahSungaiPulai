@@ -11,6 +11,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Edit Data Penduduk"
@@ -41,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:enabled="false"/> <!-- NIK should not be editable as it's likely a primary key -->
+                android:enabled="false"/> <!-- NIK should not be editable by default, enabled for new data -->
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,12 +98,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Tanggal Lahir (DD MMMM YYYY)">
+            android:hint="Tanggal Lahir">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_tgl_lahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"/>
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout

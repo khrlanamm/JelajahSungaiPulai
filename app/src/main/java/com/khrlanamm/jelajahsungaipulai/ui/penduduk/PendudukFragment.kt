@@ -1,10 +1,12 @@
 package com.khrlanamm.jelajahsungaipulai.ui.penduduk
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +18,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.data.Penduduk
 import com.khrlanamm.jelajahsungaipulai.databinding.FragmentPendudukBinding
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class PendudukFragment : Fragment() {
     private var _binding: FragmentPendudukBinding? = null
@@ -40,8 +45,11 @@ class PendudukFragment : Fragment() {
 
         setupToolbar()
         setupRecyclerView()
+        setupAddButton() // Setup tombol "Tambah Penduduk"
+        setupSearchView() // Setup Search View
         observeAdminStatus()
         observePendudukData()
+        observeStatusMessage() // Observe status messages from ViewModel
     }
 
     private fun setupToolbar() {
@@ -68,6 +76,27 @@ class PendudukFragment : Fragment() {
         }
     }
 
+    private fun setupAddButton() {
+        binding.btnAddPenduduk.setOnClickListener {
+            showAddPendudukDialog()
+        }
+    }
+
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Tidak perlu melakukan apa-apa saat submit, filtering sudah di onQueryTextChange
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Panggil fungsi filter di ViewModel
+                pendudukViewModel.filterPenduduk(newText.orEmpty())
+                return true
+            }
+        })
+    }
+
     private fun observeAdminStatus() {
         binding.progressBar.visibility = View.VISIBLE
         binding.contentLayout.visibility = View.GONE
@@ -79,8 +108,11 @@ class PendudukFragment : Fragment() {
                 val isAdmin = pendudukViewModel.isAdmin.value ?: false
                 if (isAdmin) {
                     binding.contentLayout.visibility = View.VISIBLE
-                    // Pengambilan data sekarang dipicu di dalam ViewModel jika isAdmin adalah true
+                    binding.btnAddPenduduk.visibility = View.VISIBLE // Tampilkan tombol jika admin
+                    binding.searchView.visibility = View.VISIBLE // Tampilkan search view jika admin
                 } else {
+                    binding.btnAddPenduduk.visibility = View.GONE // Sembunyikan tombol jika bukan admin
+                    binding.searchView.visibility = View.GONE // Sembunyikan search view jika bukan admin
                     showAccessDeniedDialog()
                 }
             }
@@ -88,11 +120,21 @@ class PendudukFragment : Fragment() {
     }
 
     private fun observePendudukData() {
-        // Amati daftar penduduk dari ViewModel dan perbarui adapter
-        pendudukViewModel.pendudukList.observe(viewLifecycleOwner) { list ->
+        // Amati daftar penduduk yang difilter dari ViewModel dan perbarui adapter
+        pendudukViewModel.filteredPendudukList.observe(viewLifecycleOwner) { list ->
             pendudukAdapter.submitList(list)
-            if (list.isEmpty() && pendudukViewModel.isAdmin.value == true) {
+            if (list.isEmpty() && pendudukViewModel.isAdmin.value == true && binding.searchView.query.isNullOrEmpty()) {
                 Toast.makeText(context, "Tidak ada data penduduk ditemukan.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun observeStatusMessage() {
+        pendudukViewModel.statusMessage.observe(viewLifecycleOwner) { message ->
+            message?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                // Clear the message after showing to prevent re-showing on configuration changes
+                pendudukViewModel.clearStatusMessage()
             }
         }
     }
@@ -164,20 +206,103 @@ class PendudukFragment : Fragment() {
             .show()
     }
 
+    private fun showAddPendudukDialog() {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_penduduk, null)
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        // Set judul dialog
+        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = "Tambah Data Penduduk"
+        // NIK harus bisa diisi untuk data baru
+        val etNik = dialogView.findViewById<TextInputEditText>(R.id.et_nik)
+        etNik.isEnabled = true
+
+        val etTglLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tgl_lahir)
+        etTglLahir.setOnClickListener {
+            showDatePicker(etTglLahir)
+        }
+
+        val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_edit)
+        val btnSave = dialogView.findViewById<Button>(R.id.btn_save_edit)
+        btnSave.text = "Tambah" // Ubah teks tombol menjadi "Tambah"
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnSave.setOnClickListener {
+            // Ambil data dari EditTexts
+            val newNama = dialogView.findViewById<TextInputEditText>(R.id.et_nama).text.toString()
+            val newNik = etNik.text.toString()
+            val newNoKk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString()
+            val newHubKeluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString()
+            val newJenisKel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString()
+            val newTempatLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString()
+            val newTglLahir = etTglLahir.text.toString()
+            val newAgama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString()
+            val newPendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString()
+            val newPekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString()
+            val newStatus = dialogView.findViewById<TextInputEditText>(R.id.et_status).text.toString()
+            val newRt = dialogView.findViewById<TextInputEditText>(R.id.et_rt).text.toString().toLongOrNull()
+            val newKampung = dialogView.findViewById<TextInputEditText>(R.id.et_kampung).text.toString()
+            val newKepKel = dialogView.findViewById<TextInputEditText>(R.id.et_kep_kel).text.toString()
+
+            // Validasi sederhana
+            if (newNama.isBlank() || newNik.isBlank()) {
+                Toast.makeText(context, "Nama dan NIK tidak boleh kosong.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Buat objek Penduduk baru (tanpa documentId karena ini data baru)
+            val newPenduduk = Penduduk(
+                nama = newNama,
+                nik = newNik,
+                no_kk = newNoKk,
+                hub_keluarga = newHubKeluarga,
+                jenis_kel = newJenisKel,
+                tempat_lahir = newTempatLahir,
+                tgl_lahir = newTglLahir,
+                agama = newAgama,
+                pendidikan = newPendidikan,
+                pekerjaan = newPekerjaan,
+                status = newStatus,
+                rt = newRt,
+                kampung = newKampung,
+                kep_kel = newKepKel
+            )
+
+            // Panggil ViewModel untuk menambahkan data
+            pendudukViewModel.addPenduduk(newPenduduk)
+            dialog.dismiss() // Tutup dialog
+        }
+
+        dialog.show()
+    }
+
     private fun showEditPendudukDialog(penduduk: Penduduk) {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_penduduk, null)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
 
+        // Set judul dialog
+        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = "Edit Data Penduduk"
+
         // Inisialisasi EditTexts dari layout dialog dan isi dengan data yang ada
         dialogView.findViewById<TextInputEditText>(R.id.et_nama).setText(penduduk.nama)
-        dialogView.findViewById<TextInputEditText>(R.id.et_nik).setText(penduduk.nik)
+        val etNik = dialogView.findViewById<TextInputEditText>(R.id.et_nik)
+        etNik.setText(penduduk.nik)
+        etNik.isEnabled = false // NIK tidak bisa diedit
         dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).setText(penduduk.no_kk)
         dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).setText(penduduk.hub_keluarga)
         dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).setText(penduduk.jenis_kel)
         dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).setText(penduduk.tempat_lahir)
-        dialogView.findViewById<TextInputEditText>(R.id.et_tgl_lahir).setText(penduduk.tgl_lahir)
+        val etTglLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tgl_lahir)
+        etTglLahir.setText(penduduk.tgl_lahir)
+        etTglLahir.setOnClickListener {
+            showDatePicker(etTglLahir)
+        }
         dialogView.findViewById<TextInputEditText>(R.id.et_agama).setText(penduduk.agama)
         dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).setText(penduduk.pendidikan)
         dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).setText(penduduk.pekerjaan)
@@ -188,6 +313,7 @@ class PendudukFragment : Fragment() {
 
         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_edit)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_edit)
+        btnSave.text = "Simpan" // Pastikan teks tombol adalah "Simpan"
 
         btnCancel.setOnClickListener {
             dialog.dismiss()
@@ -196,12 +322,12 @@ class PendudukFragment : Fragment() {
         btnSave.setOnClickListener {
             // Ambil data dari EditTexts
             val updatedNama = dialogView.findViewById<TextInputEditText>(R.id.et_nama).text.toString()
-            val updatedNik = dialogView.findViewById<TextInputEditText>(R.id.et_nik).text.toString()
+            val updatedNik = etNik.text.toString() // NIK tetap diambil meski disabled
             val updatedNoKk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString()
             val updatedHubKeluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString()
             val updatedJenisKel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString()
             val updatedTempatLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString()
-            val updatedTglLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tgl_lahir).text.toString()
+            val updatedTglLahir = etTglLahir.text.toString()
             val updatedAgama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString()
             val updatedPendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString()
             val updatedPekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString()
@@ -235,6 +361,44 @@ class PendudukFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    // Fungsi untuk menampilkan DatePickerDialog
+    private fun showDatePicker(editText: TextInputEditText) {
+        val calendar = Calendar.getInstance()
+
+        // Coba parsing tanggal yang sudah ada di EditText jika ada
+        val existingDateString = editText.text.toString()
+        if (existingDateString.isNotBlank()) {
+            try {
+                val format = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val date = format.parse(existingDateString)
+                date?.let { calendar.time = it }
+            } catch (e: Exception) {
+                // Biarkan tanggal default jika parsing gagal
+                e.printStackTrace()
+            }
+        }
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+                // Format tanggal yang dipilih ke "dd MMMM yyyy"
+                val selectedDateCalendar = Calendar.getInstance()
+                selectedDateCalendar.set(selectedYear, selectedMonth, selectedDayOfMonth)
+                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val formattedDate = dateFormat.format(selectedDateCalendar.time)
+                editText.setText(formattedDate)
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
     }
 
     override fun onDestroyView() {

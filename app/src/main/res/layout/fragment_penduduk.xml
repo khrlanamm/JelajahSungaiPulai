@@ -50,16 +50,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <!-- Search View for filtering residents by name -->
+        <SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:iconifiedByDefault="false"
+            android:queryHint="Cari nama penduduk..."
+            android:layout_marginTop="8dp"
+            android:background="@drawable/search_view_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Button to add new resident -->
+        <Button
+            android:id="@+id/btn_add_penduduk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambah Penduduk Baru"
+            android:drawableStart="@drawable/ic_add"
+            android:drawablePadding="8dp"
+            android:padding="12dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/search_view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
         <!-- RecyclerView to display the list of residents -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_penduduk"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_add_penduduk"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_penduduk" /> <!-- This will be the layout for each item -->
+            tools:listitem="@layout/item_penduduk" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
