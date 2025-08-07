@@ -25,7 +25,7 @@
             app:titleTextColor="@color/black" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- ProgressBar untuk indikator loading -->
+    <!-- ProgressBar for loading indicator -->
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:visibility="visible"/>
 
-    <!-- Layout untuk konten utama -->
+    <!-- Layout for main content -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_layout"
         android:layout_width="0dp"
@@ -50,16 +50,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Letakkan semua konten halaman penduduk di sini -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Selamat Datang, Admin! Ini adalah halaman data penduduk."
-            android:textSize="18sp"
+        <!-- RecyclerView to display the list of residents -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_penduduk"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="@layout/item_penduduk" /> <!-- This will be the layout for each item -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
