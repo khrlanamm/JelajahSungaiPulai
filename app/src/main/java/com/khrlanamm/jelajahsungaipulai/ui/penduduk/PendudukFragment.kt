@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.khrlanamm.jelajahsungaipulai.databinding.FragmentNotificationsBinding
+import com.khrlanamm.jelajahsungaipulai.databinding.FragmentPendudukBinding
 
-class NotificationsFragment : Fragment() {
+class PendudukFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentPendudukBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,14 +22,14 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val penduduklViewModel =
+            ViewModelProvider(this).get(PenduduklViewModel::class.java)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentPendudukBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner) {
+        val textView: TextView = binding.textPenduduk
+        penduduklViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
         return root

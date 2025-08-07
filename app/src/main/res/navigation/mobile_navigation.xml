@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.khrlanamm.jelajahsungaipulai.ui.nagari.HomeFragment"
+        android:name="com.khrlanamm.jelajahsungaipulai.ui.nagari.NagariFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_nagari" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.khrlanamm.jelajahsungaipulai.ui.kampung.DashboardFragment"
+        android:name="com.khrlanamm.jelajahsungaipulai.ui.kampung.KampungFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_kampung" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.khrlanamm.jelajahsungaipulai.ui.penduduk.NotificationsFragment"
+        android:name="com.khrlanamm.jelajahsungaipulai.ui.penduduk.PendudukFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_penduduk" />
 </navigation>
