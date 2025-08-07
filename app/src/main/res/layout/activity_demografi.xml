@@ -21,9 +21,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIconTint="?attr/colorOnPrimary"
+            app:navigationIconTint="@color/jelajah_primary_dark"
             app:title="@string/action_demografi"
-            app:titleTextColor="?attr/colorOnPrimary" />
+            app:titleTextColor="@color/jelajah_primary_dark"
+            tools:navigationIconTint="@color/jelajah_primary_dark" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ProgressBar
