@@ -25,4 +25,35 @@
     <string name="name">Nama</string>
     <string name="email">Email</string>
     <string name="edit_profile">Ubah Profil</string>
+
+    <!-- Profil Perangkat -->
+    <string-array name="perangkat_nagari_images">
+        <item>@drawable/perangkat_1</item>
+        <item>@drawable/perangkat_2</item>
+        <item>@drawable/perangkat_3</item>
+        <item>@drawable/perangkat_4</item>
+        <item>@drawable/perangkat_5</item>
+        <item>@drawable/perangkat_6</item>
+        <item>@drawable/perangkat_7</item>
+    </string-array>
+
+    <string-array name="perangkat_nagari_jabatan">
+        <item>Wali Nagari</item>
+        <item>Sekretaris Nagari</item>
+        <item>Kepala Seksi Pemerintahan</item>
+        <item>Kepala Seksi Kesejahteraan</item>
+        <item>Kepala Urusan Keuangan</item>
+        <item>Kepala Urusan Perencanaan</item>
+        <item>Kepala Urusan Tata Usaha &amp; Umum</item>
+    </string-array>
+
+    <string-array name="perangkat_nagari_nama">
+        <item>PUJIYONO</item>
+        <item>M AGUNG LAKSONO, A.Md.</item>
+        <item>Sucipto</item>
+        <item>Supriadi</item>
+        <item>Rika Gumala Dewi</item>
+        <item>Robi Candra Prasetia, S.I.P.</item>
+        <item>Willi Yuwandri Isa Putra, S.Pt.</item>
+    </string-array>
 </resources>

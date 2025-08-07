@@ -75,7 +75,7 @@
         android:layout_marginTop="16dp"
         android:gravity="start"
         android:text="Profil Digital Nagari Sungai Pulai"
-        android:textColor="@color/jelajah_primary"
+        android:textColor="@color/jelajah_secondary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -83,7 +83,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header_layout" />
 
-    <!-- ScrollView for the main content (the four cards) -->
+    <!-- ScrollView for the main content (the five cards) -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -96,10 +96,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="48dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingBottom="80dp"> <!-- Increased paddingBottom to account for bottom navigation bar -->
 
             <!-- Card: Profil Perangkat Nagari -->
             <androidx.cardview.widget.CardView
@@ -146,7 +145,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Card: Demografi Penduduk (Moved up) -->
+            <!-- Card: Demografi Penduduk -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_demography"
                 android:layout_width="match_parent"
@@ -194,7 +193,7 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- Card: Peta Nagari Sungai Pulai (Moved down) -->
+            <!-- Card: Peta Nagari Sungai Pulai -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_map"
                 android:layout_width="match_parent"
@@ -265,14 +264,14 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- New Card: Peta Rawan Bencana -->
+            <!-- New Card: Peta Sebaran UMKM -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/card_peta_bencana"
+                android:id="@+id/card_peta_umkm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginBottom="48dp"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackground"
@@ -299,7 +298,78 @@
                             android:layout_marginEnd="12dp"
                             android:contentDescription="Icon Map"
                             android:src="@drawable/ic_map"
-                            app:tint="@android:color/holo_blue_dark" /> <!-- Using jelajah_primary for blue tint -->
+                            app:tint="@color/jelajah_accent_orange" /> <!-- Tint with yellow/orange -->
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Peta Sebaran UMKM"
+                            android:textColor="@color/text_primary"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="Arrow Forward"
+                            android:src="@drawable/ic_arrow_forward"
+                            app:tint="@color/text_secondary" />
+                    </LinearLayout>
+
+                    <!-- Small preview of the map within the card -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:adjustViewBounds="true"
+                        android:alpha="1.0"
+                        android:background="@color/border_color"
+                        android:backgroundTint="@color/border_color"
+                        android:clipToOutline="true"
+                        android:contentDescription="Peta Sebaran UMKM Preview"
+                        android:outlineProvider="background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/peta_umkm" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Card: Peta Rawan Bencana -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_peta_bencana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:layout_marginEnd="12dp"
+                            android:contentDescription="Icon Map"
+                            android:src="@drawable/ic_map"
+                            app:tint="@android:color/holo_blue_dark" />
 
                         <TextView
                             android:layout_width="0dp"

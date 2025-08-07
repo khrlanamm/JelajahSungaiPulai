@@ -60,6 +60,7 @@ class NagariFragment : Fragment() {
         binding.accountName.setOnClickListener { navigateToAccountActivity() }
         binding.cardMap.setOnClickListener { showMapPopup(R.drawable.peta_sungpul) } // Pass drawable ID
         binding.cardDemography.setOnClickListener { navigateToDemografiActivity() }
+        binding.cardPetaUmkm.setOnClickListener { showMapPopup(R.drawable.peta_umkm) }
         binding.cardPetaBencana.setOnClickListener { showMapPopup(R.drawable.peta_bencana) } // New click listener for Peta Rawan Bencana
     }
 
@@ -133,11 +134,6 @@ class NagariFragment : Fragment() {
         }
     }
 
-    /**
-     * Displays a pop-up dialog containing the full map image with zoom functionality.
-     * This dialog uses a custom layout `dialog_map_image.xml` and PhotoView.
-     * @param mapResId The drawable resource ID of the map image to display.
-     */
     private fun showMapPopup(mapResId: Int) {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
