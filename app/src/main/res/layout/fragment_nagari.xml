@@ -8,7 +8,6 @@
     android:paddingHorizontal="16dp"
     tools:context=".ui.nagari.NagariFragment">
 
-    <!-- Header Layout (includes welcome text, account name, and profile picture) -->
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="0dp"
@@ -40,7 +39,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/text_primary"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 tools:text="Nama Pengguna!" />
             <!-- Removed app_title from here -->
@@ -119,10 +118,10 @@
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/ic_person"
+                        android:layout_marginEnd="12dp"
                         android:contentDescription="Icon Person"
-                        app:tint="@color/jelajah_primary"
-                        android:layout_marginEnd="12dp" />
+                        android:src="@drawable/ic_person"
+                        app:tint="@color/jelajah_accent_pink" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -197,16 +196,16 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/peta_sungpul"
-                        android:contentDescription="Peta Nagari Sungai Pulai Preview"
-                        android:background="@color/border_color"
-                        android:alpha="0.7"
-                        android:adjustViewBounds="true"
                         android:layout_marginTop="8dp"
-                        android:clipToOutline="true"
+                        android:adjustViewBounds="true"
+                        android:alpha="1.0"
+                        android:background="@color/border_color"
                         android:backgroundTint="@color/border_color"
-                        android:outlineProvider="background" />
+                        android:clipToOutline="true"
+                        android:contentDescription="Peta Nagari Sungai Pulai Preview"
+                        android:outlineProvider="background"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/peta_sungpul" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
