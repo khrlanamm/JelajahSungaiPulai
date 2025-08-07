@@ -39,7 +39,8 @@ class PendudukFragment : Fragment() {
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
         (activity as? AppCompatActivity)?.supportActionBar?.apply {
             title = "Profil Penduduk"
-            // Tombol kembali akan diatur oleh NavController atau listener di bawah
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
         }
         binding.toolbar.setNavigationOnClickListener {
             activity?.onBackPressedDispatcher?.onBackPressed()
@@ -47,21 +48,17 @@ class PendudukFragment : Fragment() {
     }
 
     private fun observeAdminStatus() {
-        // Tampilkan progress bar saat memeriksa
         binding.progressBar.visibility = View.VISIBLE
         binding.contentLayout.visibility = View.GONE
 
         pendudukViewModel.isCheckComplete.observe(viewLifecycleOwner) { isComplete ->
             if (isComplete) {
-                // Sembunyikan progress bar setelah pengecekan selesai
                 binding.progressBar.visibility = View.GONE
 
                 val isAdmin = pendudukViewModel.isAdmin.value ?: false
                 if (isAdmin) {
-                    // Jika admin, tampilkan konten halaman
                     binding.contentLayout.visibility = View.VISIBLE
                 } else {
-                    // Jika bukan admin, tampilkan dialog akses ditolak
                     showAccessDeniedDialog()
                 }
             }
