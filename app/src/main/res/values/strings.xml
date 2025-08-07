@@ -28,13 +28,13 @@
 
     <!-- Profil Perangkat -->
     <string-array name="perangkat_nagari_images">
-        <item>@drawable/perangkat_1</item>
-        <item>@drawable/perangkat_2</item>
-        <item>@drawable/perangkat_3</item>
-        <item>@drawable/perangkat_4</item>
-        <item>@drawable/perangkat_5</item>
-        <item>@drawable/perangkat_6</item>
-        <item>@drawable/perangkat_7</item>
+        <item>perangkat_1</item>
+        <item>perangkat_2</item>
+        <item>perangkat_3</item>
+        <item>perangkat_4</item>
+        <item>perangkat_5</item>
+        <item>perangkat_6</item>
+        <item>perangkat_7</item>
     </string-array>
 
     <string-array name="perangkat_nagari_jabatan">

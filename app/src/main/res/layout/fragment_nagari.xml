@@ -102,6 +102,7 @@
 
             <!-- Card: Profil Perangkat Nagari -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/card_profil_perangkat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
