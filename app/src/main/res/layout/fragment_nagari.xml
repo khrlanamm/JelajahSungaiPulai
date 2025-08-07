@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/jelajah_primary_light"
-    android:paddingHorizontal="16dp"
     tools:context=".ui.nagari.NagariFragment">
 
     <LinearLayout
         android:id="@+id/header_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="24dp"
+        android:layout_marginRight="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +73,7 @@
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:gravity="start"
         android:text="Profil Digital Nagari Sungai Pulai"
@@ -95,24 +97,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginBottom="48dp"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:paddingBottom="16dp">
 
             <!-- Card: Profil Perangkat Nagari -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
                     <ImageView
@@ -135,8 +141,8 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward"
                         android:contentDescription="Arrow Forward"
+                        android:src="@drawable/ic_arrow_forward"
                         app:tint="@color/text_secondary" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -146,13 +152,15 @@
                 android:id="@+id/card_map"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -163,17 +171,17 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:src="@drawable/ic_map"
+                            android:layout_marginEnd="12dp"
                             android:contentDescription="Icon Map"
-                            app:tint="@color/jelajah_secondary"
-                            android:layout_marginEnd="12dp" />
+                            android:src="@drawable/ic_map"
+                            app:tint="@color/jelajah_secondary" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -187,8 +195,8 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_arrow_forward"
                             android:contentDescription="Arrow Forward"
+                            android:src="@drawable/ic_arrow_forward"
                             app:tint="@color/text_secondary" />
                     </LinearLayout>
 
@@ -215,28 +223,30 @@
                 android:id="@+id/card_demography"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center_vertical"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
                     <ImageView
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:src="@drawable/ic_group"
+                        android:layout_marginEnd="12dp"
                         android:contentDescription="Icon Group"
-                        app:tint="@color/jelajah_accent_orange"
-                        android:layout_marginEnd="12dp" />
+                        android:src="@drawable/ic_group"
+                        app:tint="@color/jelajah_accent_orange" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -250,8 +260,8 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@drawable/ic_arrow_forward"
                         android:contentDescription="Arrow Forward"
+                        android:src="@drawable/ic_arrow_forward"
                         app:tint="@color/text_secondary" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
