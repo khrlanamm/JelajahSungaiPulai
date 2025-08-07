@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 data class Penduduk(
+    val documentId: String? = null,
     val agama: String? = null,
     val hub_keluarga: String? = null,
     val jenis_kel: String? = null,
@@ -24,9 +25,11 @@ data class Penduduk(
         fun fromFirestore(doc: QueryDocumentSnapshot): Penduduk {
             val tglLahirTimestamp = doc.getTimestamp("tgl_lahir")
             val tglLahirString = tglLahirTimestamp?.toDate()?.let { date ->
+                // Format tanggal sesuai kebutuhan, contoh: "dd MMMM yyyy" untuk lokal Indonesia
                 SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID")).format(date)
             }
             return Penduduk(
+                documentId = doc.id,
                 agama = doc.getString("agama"),
                 hub_keluarga = doc.getString("hub_keluarga"),
                 jenis_kel = doc.getString("jenis_kel"),
