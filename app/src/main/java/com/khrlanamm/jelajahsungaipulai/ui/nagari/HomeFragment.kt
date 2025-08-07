@@ -1,4 +1,4 @@
-package com.khrlanamm.jelajahsungaipulai.ui.home
+package com.khrlanamm.jelajahsungaipulai.ui.nagari
 
 import android.os.Bundle
 import android.view.LayoutInflater
