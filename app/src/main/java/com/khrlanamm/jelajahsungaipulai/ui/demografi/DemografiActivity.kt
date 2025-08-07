@@ -39,6 +39,10 @@ class DemografiActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Demografi Penduduk" // Judul default
 
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         // Inisialisasi ViewModel
         demografiViewModel = ViewModelProvider(this).get(DemografiViewModel::class.java)
 
