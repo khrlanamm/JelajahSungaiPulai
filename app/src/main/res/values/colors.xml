@@ -35,4 +35,19 @@
 
     <color name="green_500">#4CAF50</color>
     <color name="pink_400">#F48FB1</color>
+
+    <!-- Warna Tambahan untuk Kartu Demografi -->
+    <color name="demografi_card_blue">#BBDEFB</color>
+    <color name="demografi_card_green">#C8E6C9</color>
+    <color name="demografi_card_yellow">#FFF9C4</color>
+    <color name="demografi_card_red">#FFCDD2</color>
+    <color name="demografi_card_purple">#E1BEE7</color>
+    <color name="demografi_card_orange">#FFECB3</color>
+    <color name="demografi_card_teal">#B2DFDB</color>
+    <color name="demografi_card_grey">#CFD8DC</color>
+
+    <!-- Warna Teks -->
+    <color name="demografi_text_dark">#212121</color>
+    <color name="demografi_text_medium">#424242</color>
+    <color name="demografi_text_light">#757575</color>
 </resources>
