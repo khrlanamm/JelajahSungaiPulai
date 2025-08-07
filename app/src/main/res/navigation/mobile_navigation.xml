@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_nagari">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_nagari"
         android:name="com.khrlanamm.jelajahsungaipulai.ui.nagari.NagariFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_nagari"
         tools:layout="@layout/fragment_nagari" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_kampung"
         android:name="com.khrlanamm.jelajahsungaipulai.ui.kampung.KampungFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_kampung"
         tools:layout="@layout/fragment_kampung" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_penduduk"
         android:name="com.khrlanamm.jelajahsungaipulai.ui.penduduk.PendudukFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_penduduk"
         tools:layout="@layout/fragment_penduduk" />
 </navigation>

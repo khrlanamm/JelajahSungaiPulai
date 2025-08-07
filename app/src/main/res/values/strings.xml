@@ -1,9 +1,9 @@
 <resources>
     <!-- Menu -->
     <string name="app_name">Jelajah Sungai Pulai</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_nagari">Nagari</string>
+    <string name="title_kampung">Kampung</string>
+    <string name="title_penduduk">Penduduk</string>
 
     <!-- Strings for AuthActivity -->
     <string name="welcome_greeting">Selamat Datang,</string>
