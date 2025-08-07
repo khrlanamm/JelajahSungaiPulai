@@ -7,6 +7,7 @@
     <string name="action_nagari">Profil Nagari</string>
     <string name="action_kampung">Profil Kampung</string>
     <string name="action_penduduk">Profil Penduduk</string>
+    <string name="action_demografi">Demografi Penduduk</string>
 
     <!-- Strings for AuthActivity -->
     <string name="welcome_greeting">Selamat Datang,</string>
