@@ -60,7 +60,7 @@ class DemografiViewModel : ViewModel() {
 
     fun loadPendudukData(kampungFilter: String?) {
         _isLoading.value = true
-        _errorMessage.value = null
+        _errorMessage.value = ""
         _currentFilter.value = kampungFilter // Simpan filter saat ini
 
         Log.d("DemografiViewModel", "Memuat data dengan filter kampung: '$kampungFilter'")
