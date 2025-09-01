@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "414870726349-qjcr7ab4uo3uqc1ubu23g082gpfltttt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khrlanamm.jelajahsungaipulai",
+            "certificate_hash": "dfb7dd8cd9583aa9b8bc912c670a8bbb45290f66"
+          }
+        },
+        {
           "client_id": "414870726349-t7b4af0gj9tc4sbs85rft1rcuan8r5bq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
