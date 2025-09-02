@@ -14,8 +14,8 @@ android {
         applicationId = "com.khrlanamm.jelajahsungaipulai"
         minSdk = 24
         targetSdk = 36
-        versionCode = 7
-        versionName = "JelajahSP-release-v.0.7"
+        versionCode = 8
+        versionName = "JelajahSP-release-v.0.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -23,10 +23,12 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            ndk.debugSymbolLevel = "FULL"
         }
     }
     compileOptions {
