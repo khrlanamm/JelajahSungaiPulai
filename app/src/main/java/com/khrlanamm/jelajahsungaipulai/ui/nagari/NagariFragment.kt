@@ -73,7 +73,7 @@ class NagariFragment : Fragment() {
         binding.cardMap.setOnClickListener { showMapPopup(R.drawable.peta_sungpul) }
         binding.cardDemography.setOnClickListener { navigateToDemografiActivity() }
         binding.cardPetaUmkm.setOnClickListener { showMapPopup(R.drawable.peta_umkm) }
-        binding.cardPetaBencana.setOnClickListener { showMapPopup(R.drawable.peta_sungpul) }
+        binding.cardPetaBencana.setOnClickListener { showMapPopup(R.drawable.peta_bencana) }
     }
 
     /**

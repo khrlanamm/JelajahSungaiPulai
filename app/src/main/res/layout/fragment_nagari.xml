@@ -402,7 +402,7 @@
                         android:contentDescription="Peta Rawan Bencana Preview"
                         android:outlineProvider="background"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/peta_sungpul" />
+                        android:src="@drawable/peta_bencana" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

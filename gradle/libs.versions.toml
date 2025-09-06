@@ -1,6 +1,6 @@
 [versions]
 activity = "1.10.1"
-agp = "8.12.2"
+agp = "8.13.0"
 firebaseBom = "34.0.0"
 fragmentKtx = "1.8.8"
 coreSplashscreen = "1.0.1"
