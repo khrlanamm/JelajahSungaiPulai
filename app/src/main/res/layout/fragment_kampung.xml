@@ -37,8 +37,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:paddingBottom="16dp">
 
             <!-- Card: Kampung Tanah Nago -->
@@ -46,15 +46,15 @@
                 android:id="@+id/card_tanah_nago"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,23 +65,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
+                            android:layout_marginEnd="12dp"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
-                            android:contentDescription="Icon Map"
-                            android:tint="@color/jelajah_accent_pink"
-                            android:layout_marginEnd="12dp" />
+                            app:tint="@color/jelajah_accent_pink" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Kampung Tanah Nago"
+                            android:text="@string/kampung_tanah_nago"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -89,9 +89,9 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
-                            android:contentDescription="Arrow Forward"
-                            android:tint="@color/text_secondary" />
+                            app:tint="@color/text_secondary" />
                     </LinearLayout>
 
                     <!-- Small preview of the map within the card -->
@@ -100,12 +100,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
-                        android:alpha="1.0"
                         android:background="@color/border_color"
-                        android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Kampung Tanah Nago Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_tanah_nago"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_tanah" />
 
@@ -117,14 +113,14 @@
                 android:id="@+id/card_silaut_iii"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginHorizontal="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,23 +131,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
+                            android:layout_marginEnd="12dp"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
-                            android:contentDescription="Icon Map"
-                            android:tint="@color/jelajah_secondary"
-                            android:layout_marginEnd="12dp" />
+                            app:tint="@color/jelajah_secondary" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Kampung Silaut III"
+                            android:text="@string/kampung_silaut_iii"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -159,9 +155,9 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
-                            android:contentDescription="Arrow Forward"
-                            android:tint="@color/text_secondary" />
+                            app:tint="@color/text_secondary" />
                     </LinearLayout>
 
                     <!-- Small preview of the map within the card -->
@@ -170,12 +166,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
-                        android:alpha="1.0"
                         android:background="@color/border_color"
-                        android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Kampung Silaut III Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_silaut_iii"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_sil3" />
 
@@ -187,14 +179,14 @@
                 android:id="@+id/card_mekar_sari"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="64dp"
                 android:layout_marginHorizontal="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp"
-                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="64dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground">
+                android:foreground="?attr/selectableItemBackground"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -205,23 +197,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
+                            android:layout_marginEnd="12dp"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
-                            android:contentDescription="Icon Map"
-                            android:tint="@color/jelajah_accent_orange"
-                            android:layout_marginEnd="12dp" />
+                            app:tint="@color/jelajah_accent_orange" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Kampung Mekar Sari Mulyo"
+                            android:text="@string/kampung_mekar_sari"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -229,9 +221,9 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
-                            android:contentDescription="Arrow Forward"
-                            android:tint="@color/text_secondary" />
+                            app:tint="@color/text_secondary" />
                     </LinearLayout>
 
                     <!-- Small preview of the map within the card -->
@@ -240,12 +232,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:adjustViewBounds="true"
-                        android:alpha="1.0"
                         android:background="@color/border_color"
-                        android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Kampung Mekar Sari Mulyo Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_mekar_sari"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_mekar" />
 

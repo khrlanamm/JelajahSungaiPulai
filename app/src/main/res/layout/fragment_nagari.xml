@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selamat Datang,"
+                android:text="@string/nagari_welcome_greeting"
                 android:textColor="@color/text_secondary"
                 android:textSize="16sp" />
 
@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
-                android:contentDescription="@string/logout"
+                android:contentDescription="@string/content_desc_profile_image"
                 android:focusable="true"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/ic_profile" />
@@ -71,10 +71,10 @@
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:gravity="start"
-        android:text="Profil Digital Nagari Sungai Pulai"
+        android:text="@string/nagari_main_title"
         android:textColor="@color/jelajah_secondary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -124,7 +124,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginEnd="12dp"
-                        android:contentDescription="Icon Person"
+                        android:contentDescription="@string/content_desc_icon_person"
                         android:src="@drawable/ic_person"
                         app:tint="@color/jelajah_accent_pink" />
 
@@ -132,7 +132,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Profil Perangkat Nagari"
+                        android:text="@string/nagari_card_title_perangkat"
                         android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -140,7 +140,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:contentDescription="Arrow Forward"
+                        android:contentDescription="@string/content_desc_arrow_forward"
                         android:src="@drawable/ic_arrow_forward"
                         app:tint="@color/text_secondary" />
                 </LinearLayout>
@@ -172,7 +172,7 @@
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:layout_marginEnd="12dp"
-                        android:contentDescription="Icon Group"
+                        android:contentDescription="@string/content_desc_icon_group"
                         android:src="@drawable/ic_group"
                         app:tint="@color/jelajah_accent_orange" />
 
@@ -180,7 +180,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Demografi Penduduk"
+                        android:text="@string/nagari_card_title_demografi"
                         android:textColor="@color/text_primary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -188,7 +188,7 @@
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:contentDescription="Arrow Forward"
+                        android:contentDescription="@string/content_desc_arrow_forward"
                         android:src="@drawable/ic_arrow_forward"
                         app:tint="@color/text_secondary" />
                 </LinearLayout>
@@ -226,7 +226,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginEnd="12dp"
-                            android:contentDescription="Icon Map"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
                             app:tint="@color/jelajah_secondary" />
 
@@ -234,7 +234,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Peta Nagari Sungai Pulai"
+                            android:text="@string/nagari_card_title_peta"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -242,7 +242,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:contentDescription="Arrow Forward"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
                             app:tint="@color/text_secondary" />
                     </LinearLayout>
@@ -256,9 +256,7 @@
                         android:alpha="1.0"
                         android:background="@color/border_color"
                         android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Nagari Sungai Pulai Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_nagari_preview"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_sungpul" />
 
@@ -297,7 +295,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginEnd="12dp"
-                            android:contentDescription="Icon Map"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
                             app:tint="@color/jelajah_accent_orange" /> <!-- Tint with yellow/orange -->
 
@@ -305,7 +303,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Peta Sebaran UMKM"
+                            android:text="@string/nagari_card_title_peta_umkm"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -313,7 +311,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:contentDescription="Arrow Forward"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
                             app:tint="@color/text_secondary" />
                     </LinearLayout>
@@ -327,9 +325,7 @@
                         android:alpha="1.0"
                         android:background="@color/border_color"
                         android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Sebaran UMKM Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_umkm_preview"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_umkm" />
 
@@ -368,7 +364,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_marginEnd="12dp"
-                            android:contentDescription="Icon Map"
+                            android:contentDescription="@string/content_desc_map_icon"
                             android:src="@drawable/ic_map"
                             app:tint="@android:color/holo_blue_dark" />
 
@@ -376,7 +372,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Peta Rawan Bencana"
+                            android:text="@string/nagari_card_title_peta_bencana"
                             android:textColor="@color/text_primary"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -384,7 +380,7 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:contentDescription="Arrow Forward"
+                            android:contentDescription="@string/content_desc_arrow_forward"
                             android:src="@drawable/ic_arrow_forward"
                             app:tint="@color/text_secondary" />
                     </LinearLayout>
@@ -398,9 +394,7 @@
                         android:alpha="1.0"
                         android:background="@color/border_color"
                         android:backgroundTint="@color/border_color"
-                        android:clipToOutline="true"
-                        android:contentDescription="Peta Rawan Bencana Preview"
-                        android:outlineProvider="background"
+                        android:contentDescription="@string/content_desc_peta_bencana_preview"
                         android:scaleType="fitCenter"
                         android:src="@drawable/peta_bencana" />
 

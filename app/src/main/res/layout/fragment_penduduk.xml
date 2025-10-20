@@ -68,7 +68,7 @@
             android:id="@+id/btn_add_penduduk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tambah Penduduk Baru"
+            android:text="@string/add_penduduk"
             android:drawableStart="@drawable/ic_add"
             android:drawablePadding="8dp"
             android:padding="12dp"

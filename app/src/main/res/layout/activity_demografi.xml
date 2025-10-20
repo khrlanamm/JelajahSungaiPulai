@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Jumlah Penduduk dan Kepala Keluarga"
+                android:text="@string/demografi_header_jumlah"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -116,7 +116,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Penduduk"
+                            android:text="@string/demografi_label_total_penduduk"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -152,7 +152,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kepala Keluarga"
+                            android:text="@string/demografi_label_kepala_keluarga"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -188,7 +188,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Laki-Laki"
+                            android:text="@string/demografi_label_laki_laki"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -224,7 +224,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Perempuan"
+                            android:text="@string/demografi_label_perempuan"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -236,7 +236,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Berdasarkan Kelompok Umur"
+                android:text="@string/demografi_header_kelompok_umur"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -264,7 +264,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Berdasarkan Pendidikan"
+                android:text="@string/demografi_header_pendidikan"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -292,7 +292,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Berdasarkan Pekerjaan"
+                android:text="@string/demografi_header_pekerjaan"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -320,7 +320,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Berdasarkan Perkawinan"
+                android:text="@string/demografi_header_perkawinan"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -364,7 +364,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Belum Kawin"
+                            android:text="@string/demografi_label_belum_kawin"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -400,7 +400,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Kawin"
+                            android:text="@string/demografi_label_kawin"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -436,7 +436,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cerai Hidup"
+                            android:text="@string/demografi_label_cerai_hidup"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -472,7 +472,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Cerai Mati"
+                            android:text="@string/demografi_label_cerai_mati"
                             android:textColor="@color/demografi_text_medium"
                             android:textSize="14sp" />
                     </LinearLayout>
@@ -484,7 +484,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Berdasarkan Agama"
+                android:text="@string/demografi_header_agama"
                 android:textColor="@color/demografi_text_medium"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -532,7 +532,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
-                    <!-- Data kampung/RT akan ditambahkan secara dinamis di sini -->
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -541,4 +540,3 @@
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

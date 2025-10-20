@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -14,203 +13,217 @@
             android:id="@+id/tv_dialog_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Data Penduduk"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/black"/>
+            android:text="@string/dialog_title_edit_penduduk"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Nama">
+            android:hint="@string/hint_nama">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="NIK">
+            android:hint="@string/hint_nik">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_nik"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:enabled="false"/> <!-- NIK should not be editable by default, enabled for new data -->
+                android:enabled="false"
+                android:inputType="number" /> <!-- NIK should not be editable by default, enabled for new data -->
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="No. KK">
+            android:hint="@string/hint_no_kk">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_no_kk"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Hubungan Keluarga">
+            android:hint="@string/hint_hub_keluarga">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_hub_keluarga"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Jenis Kelamin (L/P)">
+            android:hint="@string/hint_jenis_kelamin">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_jenis_kel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapCharacters"
-                android:maxLength="1"/>
+                android:maxLength="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Tempat Lahir">
+            android:hint="@string/hint_tempat_lahir">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_tempat_lahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Tanggal Lahir">
+            android:hint="@string/hint_tanggal_lahir">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_tgl_lahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
                 android:clickable="true"
-                android:cursorVisible="false"/>
+                android:cursorVisible="false"
+                android:focusable="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Agama">
+            android:hint="@string/hint_agama">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_agama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Pendidikan">
+            android:hint="@string/hint_pendidikan">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pendidikan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Pekerjaan">
+            android:hint="@string/hint_pekerjaan">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pekerjaan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Status">
+            android:hint="@string/hint_status">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="RT">
+            android:hint="@string/hint_rt">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_rt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:hint="Kampung">
+            android:hint="@string/hint_kampung">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_kampung"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:hint="Kepala Keluarga">
+            android:hint="@string/hint_kepala_keluarga">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_kep_kel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"/>
+                android:inputType="textCapWords" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_cancel_edit"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Batal"
-                style="?attr/materialButtonOutlinedStyle"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:text="@string/button_cancel" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_save_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Simpan"/>
+                android:text="@string/button_save" />
         </LinearLayout>
 
     </LinearLayout>

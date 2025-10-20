@@ -1,4 +1,5 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Menu -->
     <string name="app_name">Jelajah Sungai Pulai</string>
     <string name="title_nagari">Nagari</string>
@@ -17,9 +18,34 @@
     <string name="kkn_info">KKN-PPM UGM Silaut 2025</string>
     <string name="google_sign_in">Daftar / Masuk dengan Google</string>
 
-    <!-- Dashboard -->
+    <!-- Menu Nagari -->
     <string name="logout">Keluar</string>
     <string name="account_name">Hai, Nama Pengguna!</string>
+    <string name="kampung_tanah_nago">Kampung Tanah Nago</string>
+    <string name="kampung_silaut_iii">Kampung Silaut III</string>
+    <string name="kampung_mekar_sari">Kampung Mekar Sari Mulyo</string>
+    <string name="content_desc_map_icon">Ikon Peta</string>
+    <string name="content_desc_arrow_forward">Panah Selanjutnya</string>
+    <string name="content_desc_peta_tanah_nago">Peta Pratinjau Kampung Tanah Nago</string>
+    <string name="content_desc_peta_silaut_iii">Peta Pratinjau Kampung Silaut III</string>
+    <string name="content_desc_peta_mekar_sari">Peta Pratinjau Kampung Mekar Sari Mulyo</string>
+    <string name="dialog_map">Peta Full Screen</string>
+    <string name="nagari_welcome_greeting">Selamat Datang,</string>
+    <string name="nagari_main_title">Profil Digital Nagari Sungai Pulai</string>
+    <string name="content_desc_profile_image">Tombol Akun Pengguna</string>
+    <string name="content_desc_icon_person">Ikon Orang</string>
+    <string name="nagari_card_title_perangkat">Profil Perangkat Nagari</string>
+    <string name="content_desc_icon_group">Ikon Grup</string>
+    <string name="nagari_card_title_demografi">Demografi Penduduk</string>
+    <string name="nagari_card_title_peta">Peta Nagari Sungai Pulai</string>
+    <string name="content_desc_peta_nagari_preview">Peta Pratinjau Nagari Sungai Pulai</string>
+    <string name="nagari_card_title_peta_umkm">Peta Sebaran UMKM</string>
+    <string name="content_desc_peta_umkm_preview">Peta Pratinjau Sebaran UMKM</string>
+    <string name="nagari_card_title_peta_bencana">Peta Rawan Bencana</string>
+    <string name="content_desc_peta_bencana_preview">Peta Pratinjau Rawan Bencana</string>
+
+    <!-- Menu Penduduk -->
+    <string name="add_penduduk">Tambah Penduduk Baru</string>
 
     <!-- Account -->
     <string name="action_account">Akun Pengguna</string>
@@ -28,12 +54,71 @@
     <string name="edit_profile">Ubah Profil</string>
     <string name="role_admin">ADMIN</string>
     <string name="role_user">PENGGUNA</string>
+    <string name="profile_image">Foto Pengguna</string>
 
     <!-- Demografi -->
     <string name="no_data_available">Tidak ada data tersedia.</string>
+    <string name="demografi_header_jumlah">Jumlah Penduduk dan Kepala Keluarga</string>
+    <string name="demografi_label_total_penduduk">Total Penduduk</string>
+    <string name="demografi_label_kepala_keluarga">Kepala Keluarga</string>
+    <string name="demografi_label_laki_laki">Laki-Laki</string>
+    <string name="demografi_label_perempuan">Perempuan</string>
+    <string name="demografi_header_kelompok_umur">Berdasarkan Kelompok Umur</string>
+    <string name="demografi_header_pendidikan">Berdasarkan Pendidikan</string>
+    <string name="demografi_header_pekerjaan">Berdasarkan Pekerjaan</string>
+    <string name="demografi_header_perkawinan">Berdasarkan Perkawinan</string>
+    <string name="demografi_label_belum_kawin">Belum Kawin</string>
+    <string name="demografi_label_kawin">Kawin</string>
+    <string name="demografi_label_cerai_hidup">Cerai Hidup</string>
+    <string name="demografi_label_cerai_mati">Cerai Mati</string>
+    <string name="demografi_header_agama">Berdasarkan Agama</string>
+
+    <!-- Dialog Edit Penduduk -->
+    <string name="dialog_title_edit_penduduk">Edit Data Penduduk</string>
+    <string name="hint_nama">Nama</string>
+    <string name="hint_nik">NIK</string>
+    <string name="hint_no_kk">No. KK</string>
+    <string name="hint_hub_keluarga">Hubungan Keluarga</string>
+    <string name="hint_jenis_kelamin">Jenis Kelamin (L/P)</string>
+    <string name="hint_tempat_lahir">Tempat Lahir</string>
+    <string name="hint_tanggal_lahir">Tanggal Lahir</string>
+    <string name="hint_agama">Agama</string>
+    <string name="hint_pendidikan">Pendidikan</string>
+    <string name="hint_pekerjaan">Pekerjaan</string>
+    <string name="hint_status">Status</string>
+    <string name="hint_rt">RT</string>
+    <string name="hint_kampung">Kampung</string>
+    <string name="hint_kepala_keluarga">Kepala Keluarga</string>
+    <string name="button_cancel">Batal</string>
+    <string name="button_save">Simpan</string>
+
+    <!-- Dialog Detail Penduduk -->
+    <string name="dialog_title_detail_penduduk">Detail Penduduk</string>
+    <string name="label_nama">Nama: </string>
+    <string name="label_nik">NIK: </string>
+    <string name="label_no_kk">No. KK: </string>
+    <string name="label_hub_keluarga">Hubungan Keluarga: </string>
+    <string name="label_jenis_kelamin">Jenis Kelamin: </string>
+    <string name="label_tempat_lahir">Tempat Lahir: </string>
+    <string name="label_tanggal_lahir">Tanggal Lahir: </string>
+    <string name="label_agama">Agama: </string>
+    <string name="label_pendidikan">Pendidikan: </string>
+    <string name="label_pekerjaan">Pekerjaan: </string>
+    <string name="label_status">Status: </string>
+    <string name="label_rt">RT: </string>
+    <string name="label_kampung">Kampung: </string>
+    <string name="label_kepala_keluarga">Kepala Keluarga: </string>
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Hapus</string>
+
+    <!-- Dialog Perangkat Nagari -->
+    <string name="dialog_title_perangkat_nagari">Perangkat Nagari Sungai Pulai</string>
+    <string name="content_desc_perangkat_nagari">Perangkat Nagari Sungai Pulai</string>
+    <string name="dialog_header_struktur">Struktur Perangkat Nagari</string>
+    <string name="dialog_header_kepala_kampung">Kepala Kampung</string>
 
     <!-- Profil Perangkat -->
-    <string-array name="perangkat_nagari_images">
+    <string-array name="perangkat_nagari_images" tools:ignore="Typos">
         <item>perangkat_1</item>
         <item>perangkat_2</item>
         <item>perangkat_3</item>

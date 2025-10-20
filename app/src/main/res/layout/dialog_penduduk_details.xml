@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
@@ -13,143 +12,144 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Detail Penduduk"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/black"/>
+            android:text="@string/dialog_title_detail_penduduk"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_detail_nama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nama: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_nama"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_nik"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NIK: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_nik"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_no_kk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No. KK: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_no_kk"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_hub_keluarga"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hubungan Keluarga: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_hub_keluarga"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_jenis_kel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Jenis Kelamin: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_jenis_kelamin"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_tempat_lahir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tempat Lahir: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_tempat_lahir"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_tgl_lahir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tanggal Lahir: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_tanggal_lahir"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_agama"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Agama: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_agama"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_pendidikan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pendidikan: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_pendidikan"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_pekerjaan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pekerjaan: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_pekerjaan"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Status: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_status"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_rt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RT: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_rt"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_kampung"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kampung: "
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:text="@string/label_kampung"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_detail_kep_kel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Kepala Keluarga: "
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            android:text="@string/label_kepala_keluarga"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="end"
+            android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                android:text="@string/button_edit" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hapus"
-                android:backgroundTint="@android:color/holo_red_dark"/>
+                android:backgroundTint="@android:color/holo_red_dark"
+                android:text="@string/button_delete" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,13 +1,12 @@
 package com.khrlanamm.jelajahsungaipulai
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.khrlanamm.jelajahsungaipulai.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,12 +23,11 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_nagari, R.id.navigation_kampung, R.id.navigation_penduduk
-            )
-        )
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+
+        val navController: NavController = navHostFragment.navController
+
         navView.setupWithNavController(navController)
     }
 }
