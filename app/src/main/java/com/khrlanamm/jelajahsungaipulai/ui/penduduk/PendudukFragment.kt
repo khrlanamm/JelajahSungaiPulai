@@ -34,7 +34,6 @@ class PendudukFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inisialisasi ViewModel
         pendudukViewModel = ViewModelProvider(this)[PendudukViewModel::class.java]
         _binding = FragmentPendudukBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,20 +41,19 @@ class PendudukFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setupToolbar()
         setupRecyclerView()
-        setupAddButton() // Setup tombol "Tambah Penduduk"
-        setupSearchView() // Setup Search View
+        setupAddButton()
+        setupSearchView()
         observeAdminStatus()
         observePendudukData()
-        observeStatusMessage() // Observe status messages from ViewModel
+        observeStatusMessage()
     }
 
     private fun setupToolbar() {
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
         (activity as? AppCompatActivity)?.supportActionBar?.apply {
-            title = "Data Penduduk" // Mengubah judul untuk mencerminkan konten
+            title = getString(R.string.penduduk_toolbar_title)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -65,11 +63,9 @@ class PendudukFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        // Inisialisasi adapter dengan pendengar klik
         pendudukAdapter = PendudukAdapter { penduduk ->
             showPendudukDetailsDialog(penduduk)
         }
-        // Atur RecyclerView dengan LinearLayoutManager dan adapter
         binding.rvPenduduk.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = pendudukAdapter
@@ -85,12 +81,10 @@ class PendudukFragment : Fragment() {
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                // Tidak perlu melakukan apa-apa saat submit, filtering sudah di onQueryTextChange
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                // Panggil fungsi filter di ViewModel
                 pendudukViewModel.filterPenduduk(newText.orEmpty())
                 return true
             }
@@ -108,11 +102,11 @@ class PendudukFragment : Fragment() {
                 val isAdmin = pendudukViewModel.isAdmin.value ?: false
                 if (isAdmin) {
                     binding.contentLayout.visibility = View.VISIBLE
-                    binding.btnAddPenduduk.visibility = View.VISIBLE // Tampilkan tombol jika admin
-                    binding.searchView.visibility = View.VISIBLE // Tampilkan search view jika admin
+                    binding.btnAddPenduduk.visibility = View.VISIBLE
+                    binding.searchView.visibility = View.VISIBLE
                 } else {
-                    binding.btnAddPenduduk.visibility = View.GONE // Sembunyikan tombol jika bukan admin
-                    binding.searchView.visibility = View.GONE // Sembunyikan search view jika bukan admin
+                    binding.btnAddPenduduk.visibility = View.GONE
+                    binding.searchView.visibility = View.GONE
                     showAccessDeniedDialog()
                 }
             }
@@ -120,11 +114,10 @@ class PendudukFragment : Fragment() {
     }
 
     private fun observePendudukData() {
-        // Amati daftar penduduk yang difilter dari ViewModel dan perbarui adapter
         pendudukViewModel.filteredPendudukList.observe(viewLifecycleOwner) { list ->
             pendudukAdapter.submitList(list)
             if (list.isEmpty() && pendudukViewModel.isAdmin.value == true && binding.searchView.query.isNullOrEmpty()) {
-                Toast.makeText(context, "Tidak ada data penduduk ditemukan.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.penduduk_no_data_found), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -133,7 +126,6 @@ class PendudukFragment : Fragment() {
         pendudukViewModel.statusMessage.observe(viewLifecycleOwner) { message ->
             message?.let {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                // Clear the message after showing to prevent re-showing on configuration changes
                 pendudukViewModel.clearStatusMessage()
             }
         }
@@ -141,9 +133,9 @@ class PendudukFragment : Fragment() {
 
     private fun showAccessDeniedDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle("Akses Ditolak")
-            .setMessage("Halaman data penduduk hanya bisa dilihat dan dimodifikasi oleh Admin.")
-            .setPositiveButton("OK") { _, _ ->
+            .setTitle(getString(R.string.penduduk_access_denied_title))
+            .setMessage(getString(R.string.penduduk_access_denied_message))
+            .setPositiveButton(getString(R.string.dialog_button_ok)) { _, _ ->
                 activity?.onBackPressedDispatcher?.onBackPressed()
             }
             .setCancelable(false)
@@ -157,34 +149,33 @@ class PendudukFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        // Inisialisasi TextViews dari layout dialog
-        dialogView.findViewById<TextView>(R.id.tv_detail_nama).text = "Nama: ${penduduk.nama ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_nik).text = "NIK: ${penduduk.nik ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_no_kk).text = "No. KK: ${penduduk.no_kk ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_hub_keluarga).text = "Hubungan Keluarga: ${penduduk.hub_keluarga ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_jenis_kel).text = "Jenis Kelamin: ${penduduk.jenis_kel ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_tempat_lahir).text = "Tempat Lahir: ${penduduk.tempat_lahir ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_tgl_lahir).text = "Tanggal Lahir: ${penduduk.tgl_lahir ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_agama).text = "Agama: ${penduduk.agama ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_pendidikan).text = "Pendidikan: ${penduduk.pendidikan ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_pekerjaan).text = "Pekerjaan: ${penduduk.pekerjaan ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_status).text = "Status: ${penduduk.status ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_rt).text = "RT: ${penduduk.rt ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_kampung).text = "Kampung: ${penduduk.kampung ?: "-"}"
-        dialogView.findViewById<TextView>(R.id.tv_detail_kep_kel).text = "Kepala Keluarga: ${penduduk.kep_kel ?: "-"}"
+        val dash = "-"
+        dialogView.findViewById<TextView>(R.id.tv_detail_nama).text = getString(R.string.detail_label_nama, penduduk.nama ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_nik).text = getString(R.string.detail_label_nik, penduduk.nik ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_no_kk).text = getString(R.string.detail_label_no_kk, penduduk.no_kk ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_hub_keluarga).text = getString(R.string.detail_label_hub_keluarga, penduduk.hub_keluarga ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_jenis_kel).text = getString(R.string.detail_label_jenis_kel, penduduk.jenis_kel ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_tempat_lahir).text = getString(R.string.detail_label_tempat_lahir, penduduk.tempat_lahir ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_tgl_lahir).text = getString(R.string.detail_label_tgl_lahir, penduduk.tgl_lahir ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_agama).text = getString(R.string.detail_label_agama, penduduk.agama ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_pendidikan).text = getString(R.string.detail_label_pendidikan, penduduk.pendidikan ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_pekerjaan).text = getString(R.string.detail_label_pekerjaan, penduduk.pekerjaan ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_status).text = getString(R.string.detail_label_status, penduduk.status ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_rt).text = getString(R.string.detail_label_rt, penduduk.rt?.toString() ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_kampung).text = getString(R.string.detail_label_kampung, penduduk.kampung ?: dash)
+        dialogView.findViewById<TextView>(R.id.tv_detail_kep_kel).text = getString(R.string.detail_label_kep_kel, penduduk.kep_kel ?: dash)
 
-        // Inisialisasi tombol edit dan hapus
         val btnEdit = dialogView.findViewById<Button>(R.id.btn_edit)
         val btnDelete = dialogView.findViewById<Button>(R.id.btn_delete)
 
         btnEdit.setOnClickListener {
-            dialog.dismiss() // Tutup dialog detail
-            showEditPendudukDialog(penduduk) // Tampilkan dialog edit
+            dialog.dismiss()
+            showEditPendudukDialog(penduduk)
         }
 
         btnDelete.setOnClickListener {
-            dialog.dismiss() // Tutup dialog detail
-            showDeleteConfirmationDialog(penduduk) // Tampilkan konfirmasi hapus
+            dialog.dismiss()
+            showDeleteConfirmationDialog(penduduk)
         }
 
         dialog.show()
@@ -192,16 +183,16 @@ class PendudukFragment : Fragment() {
 
     private fun showDeleteConfirmationDialog(penduduk: Penduduk) {
         AlertDialog.Builder(requireContext())
-            .setTitle("Hapus Data Penduduk")
-            .setMessage("Apakah Anda yakin ingin menghapus data ${penduduk.nama} (NIK: ${penduduk.nik})?")
-            .setPositiveButton("Hapus") { _, _ ->
+            .setTitle(getString(R.string.delete_dialog_title))
+            .setMessage(getString(R.string.delete_dialog_message, penduduk.nama, penduduk.nik))
+            .setPositiveButton(getString(R.string.dialog_button_delete)) { _, _ ->
                 penduduk.documentId?.let { docId ->
                     pendudukViewModel.deletePenduduk(docId)
                 } ?: run {
-                    Toast.makeText(context, "Gagal menghapus: ID dokumen tidak ditemukan.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.delete_error_no_doc_id), Toast.LENGTH_SHORT).show()
                 }
             }
-            .setNegativeButton("Batal", null)
+            .setNegativeButton(getString(R.string.dialog_button_cancel), null)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .show()
     }
@@ -212,9 +203,7 @@ class PendudukFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        // Set judul dialog
-        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = "Tambah Data Penduduk"
-        // NIK harus bisa diisi untuk data baru
+        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = getString(R.string.add_dialog_title)
         val etNik = dialogView.findViewById<TextInputEditText>(R.id.et_nik)
         etNik.isEnabled = true
 
@@ -225,56 +214,40 @@ class PendudukFragment : Fragment() {
 
         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_edit)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_edit)
-        btnSave.text = "Tambah" // Ubah teks tombol menjadi "Tambah"
+        btnSave.text = getString(R.string.dialog_button_add)
 
         btnCancel.setOnClickListener {
             dialog.dismiss()
         }
 
         btnSave.setOnClickListener {
-            // Ambil data dari EditTexts
             val newNama = dialogView.findViewById<TextInputEditText>(R.id.et_nama).text.toString()
             val newNik = etNik.text.toString()
-            val newNoKk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString()
-            val newHubKeluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString()
-            val newJenisKel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString()
-            val newTempatLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString()
-            val newTglLahir = etTglLahir.text.toString()
-            val newAgama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString()
-            val newPendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString()
-            val newPekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString()
-            val newStatus = dialogView.findViewById<TextInputEditText>(R.id.et_status).text.toString()
-            val newRt = dialogView.findViewById<TextInputEditText>(R.id.et_rt).text.toString().toLongOrNull()
-            val newKampung = dialogView.findViewById<TextInputEditText>(R.id.et_kampung).text.toString()
-            val newKepKel = dialogView.findViewById<TextInputEditText>(R.id.et_kep_kel).text.toString()
 
-            // Validasi sederhana
             if (newNama.isBlank() || newNik.isBlank()) {
-                Toast.makeText(context, "Nama dan NIK tidak boleh kosong.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.add_edit_validation_error), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            // Buat objek Penduduk baru (tanpa documentId karena ini data baru)
             val newPenduduk = Penduduk(
                 nama = newNama,
                 nik = newNik,
-                no_kk = newNoKk,
-                hub_keluarga = newHubKeluarga,
-                jenis_kel = newJenisKel,
-                tempat_lahir = newTempatLahir,
-                tgl_lahir = newTglLahir,
-                agama = newAgama,
-                pendidikan = newPendidikan,
-                pekerjaan = newPekerjaan,
-                status = newStatus,
-                rt = newRt,
-                kampung = newKampung,
-                kep_kel = newKepKel
+                no_kk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString(),
+                hub_keluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString(),
+                jenis_kel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString(),
+                tempat_lahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString(),
+                tgl_lahir = etTglLahir.text.toString(),
+                agama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString(),
+                pendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString(),
+                pekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString(),
+                status = dialogView.findViewById<TextInputEditText>(R.id.et_status).text.toString(),
+                rt = dialogView.findViewById<TextInputEditText>(R.id.et_rt).text.toString().toLongOrNull(),
+                kampung = dialogView.findViewById<TextInputEditText>(R.id.et_kampung).text.toString(),
+                kep_kel = dialogView.findViewById<TextInputEditText>(R.id.et_kep_kel).text.toString()
             )
 
-            // Panggil ViewModel untuk menambahkan data
             pendudukViewModel.addPenduduk(newPenduduk)
-            dialog.dismiss() // Tutup dialog
+            dialog.dismiss()
         }
 
         dialog.show()
@@ -286,23 +259,22 @@ class PendudukFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        // Set judul dialog
-        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = "Edit Data Penduduk"
+        dialogView.findViewById<TextView>(R.id.tv_dialog_title)?.text = getString(R.string.edit_dialog_title)
 
-        // Inisialisasi EditTexts dari layout dialog dan isi dengan data yang ada
-        dialogView.findViewById<TextInputEditText>(R.id.et_nama).setText(penduduk.nama)
         val etNik = dialogView.findViewById<TextInputEditText>(R.id.et_nik)
         etNik.setText(penduduk.nik)
-        etNik.isEnabled = false // NIK tidak bisa diedit
-        dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).setText(penduduk.no_kk)
-        dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).setText(penduduk.hub_keluarga)
-        dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).setText(penduduk.jenis_kel)
-        dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).setText(penduduk.tempat_lahir)
+        etNik.isEnabled = false
         val etTglLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tgl_lahir)
         etTglLahir.setText(penduduk.tgl_lahir)
         etTglLahir.setOnClickListener {
             showDatePicker(etTglLahir)
         }
+
+        dialogView.findViewById<TextInputEditText>(R.id.et_nama).setText(penduduk.nama)
+        dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).setText(penduduk.no_kk)
+        dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).setText(penduduk.hub_keluarga)
+        dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).setText(penduduk.jenis_kel)
+        dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).setText(penduduk.tempat_lahir)
         dialogView.findViewById<TextInputEditText>(R.id.et_agama).setText(penduduk.agama)
         dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).setText(penduduk.pendidikan)
         dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).setText(penduduk.pekerjaan)
@@ -313,69 +285,47 @@ class PendudukFragment : Fragment() {
 
         val btnCancel = dialogView.findViewById<Button>(R.id.btn_cancel_edit)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_edit)
-        btnSave.text = "Simpan" // Pastikan teks tombol adalah "Simpan"
+        btnSave.text = getString(R.string.dialog_button_save)
 
         btnCancel.setOnClickListener {
             dialog.dismiss()
         }
 
         btnSave.setOnClickListener {
-            // Ambil data dari EditTexts
-            val updatedNama = dialogView.findViewById<TextInputEditText>(R.id.et_nama).text.toString()
-            val updatedNik = etNik.text.toString() // NIK tetap diambil meski disabled
-            val updatedNoKk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString()
-            val updatedHubKeluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString()
-            val updatedJenisKel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString()
-            val updatedTempatLahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString()
-            val updatedTglLahir = etTglLahir.text.toString()
-            val updatedAgama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString()
-            val updatedPendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString()
-            val updatedPekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString()
-            val updatedStatus = dialogView.findViewById<TextInputEditText>(R.id.et_status).text.toString()
-            val updatedRt = dialogView.findViewById<TextInputEditText>(R.id.et_rt).text.toString().toLongOrNull()
-            val updatedKampung = dialogView.findViewById<TextInputEditText>(R.id.et_kampung).text.toString()
-            val updatedKepKel = dialogView.findViewById<TextInputEditText>(R.id.et_kep_kel).text.toString()
-
-            // Buat objek Penduduk baru dengan data yang diperbarui (pastikan documentId tetap sama)
             val updatedPenduduk = Penduduk(
                 documentId = penduduk.documentId,
-                nama = updatedNama,
-                nik = updatedNik,
-                no_kk = updatedNoKk,
-                hub_keluarga = updatedHubKeluarga,
-                jenis_kel = updatedJenisKel,
-                tempat_lahir = updatedTempatLahir,
-                tgl_lahir = updatedTglLahir,
-                agama = updatedAgama,
-                pendidikan = updatedPendidikan,
-                pekerjaan = updatedPekerjaan,
-                status = updatedStatus,
-                rt = updatedRt,
-                kampung = updatedKampung,
-                kep_kel = updatedKepKel
+                nik = etNik.text.toString(),
+                nama = dialogView.findViewById<TextInputEditText>(R.id.et_nama).text.toString(),
+                no_kk = dialogView.findViewById<TextInputEditText>(R.id.et_no_kk).text.toString(),
+                hub_keluarga = dialogView.findViewById<TextInputEditText>(R.id.et_hub_keluarga).text.toString(),
+                jenis_kel = dialogView.findViewById<TextInputEditText>(R.id.et_jenis_kel).text.toString(),
+                tempat_lahir = dialogView.findViewById<TextInputEditText>(R.id.et_tempat_lahir).text.toString(),
+                tgl_lahir = etTglLahir.text.toString(),
+                agama = dialogView.findViewById<TextInputEditText>(R.id.et_agama).text.toString(),
+                pendidikan = dialogView.findViewById<TextInputEditText>(R.id.et_pendidikan).text.toString(),
+                pekerjaan = dialogView.findViewById<TextInputEditText>(R.id.et_pekerjaan).text.toString(),
+                status = dialogView.findViewById<TextInputEditText>(R.id.et_status).text.toString(),
+                rt = dialogView.findViewById<TextInputEditText>(R.id.et_rt).text.toString().toLongOrNull(),
+                kampung = dialogView.findViewById<TextInputEditText>(R.id.et_kampung).text.toString(),
+                kep_kel = dialogView.findViewById<TextInputEditText>(R.id.et_kep_kel).text.toString()
             )
 
-            // Panggil ViewModel untuk mengupdate data
             pendudukViewModel.updatePenduduk(updatedPenduduk)
-            dialog.dismiss() // Tutup dialog edit
+            dialog.dismiss()
         }
 
         dialog.show()
     }
 
-    // Fungsi untuk menampilkan DatePickerDialog
     private fun showDatePicker(editText: TextInputEditText) {
         val calendar = Calendar.getInstance()
-
-        // Coba parsing tanggal yang sudah ada di EditText jika ada
         val existingDateString = editText.text.toString()
         if (existingDateString.isNotBlank()) {
             try {
-                val format = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val format = SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"))
                 val date = format.parse(existingDateString)
                 date?.let { calendar.time = it }
             } catch (e: Exception) {
-                // Biarkan tanggal default jika parsing gagal
                 e.printStackTrace()
             }
         }
@@ -387,10 +337,9 @@ class PendudukFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                // Format tanggal yang dipilih ke "dd MMMM yyyy"
                 val selectedDateCalendar = Calendar.getInstance()
                 selectedDateCalendar.set(selectedYear, selectedMonth, selectedDayOfMonth)
-                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale("id", "ID"))
+                val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.forLanguageTag("id-ID"))
                 val formattedDate = dateFormat.format(selectedDateCalendar.time)
                 editText.setText(formattedDate)
             },

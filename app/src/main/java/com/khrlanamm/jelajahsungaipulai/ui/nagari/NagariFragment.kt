@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
@@ -17,11 +16,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners // Import for rounded corners
-import com.bumptech.glide.request.RequestOptions // Import for request options
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.github.chrisbanes.photoview.PhotoView
 import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.databinding.FragmentNagariBinding
@@ -32,7 +32,7 @@ class NagariFragment : Fragment() {
     private var _binding: FragmentNagariBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var nagariViewModel: NagariViewModel
+    private val nagariViewModel: NagariViewModel by viewModels()
 
     private var backPressedTime: Long = 0
     private var backToast: Toast? = null
@@ -43,7 +43,6 @@ class NagariFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentNagariBinding.inflate(inflater, container, false)
-        nagariViewModel = ViewModelProvider(this).get(NagariViewModel::class.java)
         return binding.root
     }
 
@@ -61,36 +60,23 @@ class NagariFragment : Fragment() {
         observeViewModel()
     }
 
-    /**
-     * Mengatur pendengar klik untuk berbagai elemen UI.
-     * Termasuk pendengar untuk tombol akun, nama akun, kartu profil perangkat,
-     * kartu peta, kartu demografi, kartu peta UMKM, dan kartu peta bencana.
-     */
     private fun setupClickListeners() {
         binding.accountButton.setOnClickListener { navigateToAccountActivity() }
         binding.accountName.setOnClickListener { navigateToAccountActivity() }
-        binding.cardProfilPerangkat.setOnClickListener { showPerangkatNagariPopup() } // Click listener for Perangkat Nagari
+        binding.cardProfilPerangkat.setOnClickListener { showPerangkatNagariPopup() }
         binding.cardMap.setOnClickListener { showMapPopup(R.drawable.peta_sungpul) }
         binding.cardDemography.setOnClickListener { navigateToDemografiActivity() }
         binding.cardPetaUmkm.setOnClickListener { showMapPopup(R.drawable.peta_umkm) }
         binding.cardPetaBencana.setOnClickListener { showMapPopup(R.drawable.peta_bencana) }
     }
 
-    /**
-     * Mengatur teks sambutan untuk pengguna, menampilkan "Halo, [Dua Kata Pertama Nama]!".
-     * @param userName Nama lengkap pengguna.
-     */
     private fun setupWelcomeText(userName: String?) {
         if (userName != null) {
             val displayName = userName.split(" ").take(2).joinToString(" ")
-            binding.accountName.text = "Halo, $displayName!"
+            binding.accountName.text = getString(R.string.welcome_message, displayName)
         }
     }
 
-    /**
-     * Memuat dan menampilkan gambar profil pengguna menggunakan Glide, menerapkan pemotongan melingkar.
-     * @param photoUrl URL gambar profil pengguna.
-     */
     private fun setupProfilePicture(photoUrl: String?) {
         if (photoUrl != null) {
             Glide.with(this)
@@ -100,26 +86,16 @@ class NagariFragment : Fragment() {
         }
     }
 
-    /**
-     * Menavigasi pengguna ke AccountActivity.
-     */
     private fun navigateToAccountActivity() {
         val intent = Intent(activity, AccountActivity::class.java)
         startActivity(intent)
     }
 
-    /**
-     * Menavigasi pengguna ke DemografiActivity.
-     */
     private fun navigateToDemografiActivity() {
         val intent = Intent(activity, DemografiActivity::class.java)
         startActivity(intent)
     }
 
-    /**
-     * Mengatur perilaku tombol kembali kustom untuk fragmen.
-     * Pada penekanan pertama, menampilkan toast. Pada penekanan kedua dalam 2 detik, keluar dari aplikasi.
-     */
     private fun setupOnBackPressed() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -141,95 +117,83 @@ class NagariFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    /**
-     * Mengamati LiveData isLoading dari ViewModel dan memperbarui visibilitas ProgressBar.
-     */
     private fun observeViewModel() {
         nagariViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
     }
 
-    /**
-     * Menampilkan dialog pop-up yang berisi gambar peta lengkap dengan fungsionalitas zoom.
-     * Dialog ini menggunakan tata letak kustom `dialog_map_image.xml` dan PhotoView.
-     * @param mapResId ID sumber daya drawable dari gambar peta yang akan ditampilkan.
-     */
     private fun showMapPopup(mapResId: Int) {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_map_image, null)
         val mapImageView: PhotoView = dialogView.findViewById(R.id.fullScreenMapImageView)
 
-        // Muat gambar peta ke PhotoView menggunakan Glide
         Glide.with(this)
             .load(mapResId)
             .into(mapImageView)
 
         builder.setView(dialogView)
         val dialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT)) // Make dialog background transparent for custom shape
+        // --- PERBAIKAN --- Menggunakan KTX extension function 'toDrawable()'
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog.show()
     }
 
-    /**
-     * Menampilkan dialog pop-up kustom yang menampilkan profil perangkat Nagari.
-     * Memuat data dari string arrays dan menampilkan gambar, nama, dan jabatan.
-     */
     private fun showPerangkatNagariPopup() {
         val builder = AlertDialog.Builder(requireContext())
         val inflater = layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_perangkat_nagari, null)
 
-        val perangkatNagariFullImageView: ImageView = dialogView.findViewById(R.id.perangkatNagariFullImageView)
-        val perangkatListContainer: LinearLayout = dialogView.findViewById(R.id.perangkat_list_container)
-        val kepalaKampungListContainer: LinearLayout = dialogView.findViewById(R.id.kepala_kampung_list_container)
+        val perangkatNagariFullImageView: ImageView =
+            dialogView.findViewById(R.id.perangkatNagariFullImageView)
+        val perangkatListContainer: LinearLayout =
+            dialogView.findViewById(R.id.perangkat_list_container)
+        val kepalaKampungListContainer: LinearLayout =
+            dialogView.findViewById(R.id.kepala_kampung_list_container)
 
-        // Muat gambar utama perangkat Nagari dengan lebar penuh dan tinggi menyesuaikan, serta sudut melengkung
         perangkatNagariFullImageView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, // Lebar penuh
-            LinearLayout.LayoutParams.WRAP_CONTENT  // Tinggi menyesuaikan
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            gravity = Gravity.CENTER_HORIZONTAL // Pusatkan gambar
+            gravity = Gravity.CENTER_HORIZONTAL
         }
         Glide.with(this)
             .load(R.drawable.perangkat_ful)
-            .apply(RequestOptions.bitmapTransform(RoundedCorners(12.dpToPx()))) // Terapkan sudut melengkung
+            .apply(RequestOptions.bitmapTransform(RoundedCorners(12.dpToPx())))
             .into(perangkatNagariFullImageView)
 
-        // Ambil data dari string arrays
-        val perangkatImageNames = resources.getStringArray(R.array.perangkat_nagari_images)
+        val perangkatImagesArray = resources.obtainTypedArray(R.array.perangkat_nagari_images_array)
         val perangkatJabatan = resources.getStringArray(R.array.perangkat_nagari_jabatan)
         val perangkatNama = resources.getStringArray(R.array.perangkat_nagari_nama)
 
-        // Tambahkan item Perangkat Nagari secara dinamis
         for (i in perangkatNama.indices) {
             val itemLayout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER_VERTICAL
-                setPadding(0, 8.dpToPx(), 0, 8.dpToPx()) // Tambahkan padding vertikal
+                setPadding(0, 8.dpToPx(), 0, 8.dpToPx())
             }
 
             val imageView = ImageView(requireContext()).apply {
-                val imageWidth = 80.dpToPx() // Lebar gambar
-                val imageHeight = (imageWidth * 4) / 3 // Tinggi untuk rasio 4:3
+                val imageWidth = 80.dpToPx()
+                val imageHeight = (imageWidth * 4) / 3
                 layoutParams = LinearLayout.LayoutParams(
                     imageWidth,
                     imageHeight
                 ).apply {
                     marginEnd = 16.dpToPx()
                 }
-                scaleType = ImageView.ScaleType.CENTER_CROP // Tetap CENTER_CROP untuk mengisi ImageView
-                // Dapatkan ID sumber daya drawable dari nama string
-                val imageResId = resources.getIdentifier(perangkatImageNames[i], "drawable", requireContext().packageName)
+                scaleType = ImageView.ScaleType.CENTER_CROP
+
+                val imageResId = perangkatImagesArray.getResourceId(i, 0)
+
                 if (imageResId != 0) {
                     Glide.with(this@NagariFragment)
                         .load(imageResId)
-                        .apply(RequestOptions.bitmapTransform(RoundedCorners(12.dpToPx()))) // Terapkan sudut melengkung
+                        .apply(RequestOptions.bitmapTransform(RoundedCorners(12.dpToPx())))
                         .into(this)
                 } else {
-                    // Fallback jika gambar tidak ditemukan (misalnya, gunakan ikon profil default)
-                    setImageResource(R.drawable.ic_profile) // Pastikan Anda memiliki ic_profile di drawable
+                    setImageResource(R.drawable.ic_profile)
                 }
             }
 
@@ -263,7 +227,8 @@ class NagariFragment : Fragment() {
             perangkatListContainer.addView(itemLayout)
         }
 
-        // Tambahkan item Kepala Kampung secara dinamis
+        perangkatImagesArray.recycle()
+
         val kepalaKampungData = mapOf(
             "Kepala Kampung Tanah Nago" to "Sukarsin",
             "Kepala Kampung Mekar Sari Mulyo" to "Joni Riyadi",
@@ -273,11 +238,11 @@ class NagariFragment : Fragment() {
         kepalaKampungData.forEach { (jabatan, nama) ->
             val itemLayout = LinearLayout(requireContext()).apply {
                 orientation = LinearLayout.VERTICAL
-                setPadding(0, 4.dpToPx(), 0, 4.dpToPx()) // Tambahkan padding vertikal
+                setPadding(0, 4.dpToPx(), 0, 4.dpToPx())
             }
 
             val jabatanTextView = TextView(requireContext()).apply {
-                text = "$jabatan: $nama"
+                text = getString(R.string.kepala_kampung_format, jabatan, nama)
                 setTextColor(ContextCompat.getColor(requireContext(), R.color.text_primary))
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             }
@@ -287,14 +252,11 @@ class NagariFragment : Fragment() {
 
         builder.setView(dialogView)
         val dialog = builder.create()
-        // Atur latar belakang dialog menjadi transparan agar sudut membulat dari dialog_background terlihat
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        // --- PERBAIKAN --- Menggunakan KTX extension function 'toDrawable()'
+        dialog.window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
         dialog.show()
     }
 
-    /**
-     * Fungsi ekstensi untuk mengkonversi nilai dp ke piksel.
-     */
     private fun Int.dpToPx(): Int {
         return (this * resources.displayMetrics.density + 0.5f).toInt()
     }

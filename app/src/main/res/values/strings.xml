@@ -5,22 +5,18 @@
     <string name="title_nagari">Nagari</string>
     <string name="title_kampung">Kampung</string>
     <string name="title_penduduk">Penduduk</string>
-    <string name="action_nagari">Profil Nagari</string>
     <string name="action_kampung">Profil Kampung</string>
     <string name="action_penduduk">Profil Penduduk</string>
     <string name="action_demografi">Demografi Penduduk</string>
 
     <!-- Strings for AuthActivity -->
-    <string name="welcome_greeting">Selamat Datang,</string>
     <string name="app_logo_description">Logo Aplikasi Jelajah Sungai Pulai</string>
     <string name="app_full_name">Profiling Digital</string>
     <string name="jelajah_name">Nagari Sungai Pulai</string>
     <string name="kkn_info">KKN-PPM UGM Silaut 2025</string>
-    <string name="google_sign_in">Daftar / Masuk dengan Google</string>
 
     <!-- Menu Nagari -->
     <string name="logout">Keluar</string>
-    <string name="account_name">Hai, Nama Pengguna!</string>
     <string name="kampung_tanah_nago">Kampung Tanah Nago</string>
     <string name="kampung_silaut_iii">Kampung Silaut III</string>
     <string name="kampung_mekar_sari">Kampung Mekar Sari Mulyo</string>
@@ -43,6 +39,8 @@
     <string name="content_desc_peta_umkm_preview">Peta Pratinjau Sebaran UMKM</string>
     <string name="nagari_card_title_peta_bencana">Peta Rawan Bencana</string>
     <string name="content_desc_peta_bencana_preview">Peta Pratinjau Rawan Bencana</string>
+    <string name="welcome_message">Halo, %1$s!</string>
+    <string name="kepala_kampung_format">%1$s: %2$s</string>
 
     <!-- Menu Penduduk -->
     <string name="add_penduduk">Tambah Penduduk Baru</string>
@@ -117,18 +115,51 @@
     <string name="dialog_header_struktur">Struktur Perangkat Nagari</string>
     <string name="dialog_header_kepala_kampung">Kepala Kampung</string>
 
-    <!-- Profil Perangkat -->
-    <string-array name="perangkat_nagari_images" tools:ignore="Typos">
-        <item>perangkat_1</item>
-        <item>perangkat_2</item>
-        <item>perangkat_3</item>
-        <item>perangkat_4</item>
-        <item>perangkat_5</item>
-        <item>perangkat_6</item>
-        <item>perangkat_7</item>
-    </string-array>
+    <!-- Fragment Penduduk -->
+    <string name="penduduk_toolbar_title">Data Penduduk</string>
+    <string name="penduduk_no_data_found">Tidak ada data penduduk ditemukan.</string>
 
-    <string-array name="perangkat_nagari_jabatan">
+    <!-- Dialog Access Denied -->
+    <string name="penduduk_access_denied_title">Akses Ditolak</string>
+    <string name="penduduk_access_denied_message">Halaman data penduduk hanya bisa dilihat dan dimodifikasi oleh Admin.</string>
+
+    <!-- Dialog Details -->
+    <string name="detail_label_nama">Nama: %1$s</string>
+    <string name="detail_label_nik">NIK: %1$s</string>
+    <string name="detail_label_no_kk">No. KK: %1$s</string>
+    <string name="detail_label_hub_keluarga">Hubungan Keluarga: %1$s</string>
+    <string name="detail_label_jenis_kel">Jenis Kelamin: %1$s</string>
+    <string name="detail_label_tempat_lahir">Tempat Lahir: %1$s</string>
+    <string name="detail_label_tgl_lahir">Tanggal Lahir: %1$s</string>
+    <string name="detail_label_agama">Agama: %1$s</string>
+    <string name="detail_label_pendidikan">Pendidikan: %1$s</string>
+    <string name="detail_label_pekerjaan">Pekerjaan: %1$s</string>
+    <string name="detail_label_status">Status: %1$s</string>
+    <string name="detail_label_rt">RT: %1$s</string>
+    <string name="detail_label_kampung">Kampung: %1$s</string>
+    <string name="detail_label_kep_kel">Kepala Keluarga: %1$s</string>
+
+    <!-- Dialog Delete -->
+    <string name="delete_dialog_title">Hapus Data Penduduk</string>
+    <string name="delete_dialog_message">Apakah Anda yakin ingin menghapus data %1$s (NIK: %2$s)?</string>
+    <string name="delete_error_no_doc_id">Gagal menghapus: ID dokumen tidak ditemukan.</string>
+
+    <!-- Dialog Add -->
+    <string name="add_dialog_title">Tambah Data Penduduk</string>
+    <string name="add_edit_validation_error">Nama dan NIK tidak boleh kosong.</string>
+
+    <!-- Dialog Edit -->
+    <string name="edit_dialog_title">Edit Data Penduduk</string>
+
+    <!-- Tombol Dialog Umum -->
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_delete">Hapus</string>
+    <string name="dialog_button_cancel">Batal</string>
+    <string name="dialog_button_add">Tambah</string>
+    <string name="dialog_button_save">Simpan</string>
+
+    <!-- Profil Perangkat -->
+    <string-array name="perangkat_nagari_jabatan" tools:ignore="Typos">
         <item>Wali Nagari</item>
         <item>Sekretaris Nagari</item>
         <item>Kepala Seksi Pemerintahan</item>
@@ -138,7 +169,7 @@
         <item>Kepala Urusan Tata Usaha &amp; Umum</item>
     </string-array>
 
-    <string-array name="perangkat_nagari_nama">
+    <string-array name="perangkat_nagari_nama" tools:ignore="Typos">
         <item>PUJIYONO</item>
         <item>M AGUNG LAKSONO, A.Md.</item>
         <item>Sucipto</item>
