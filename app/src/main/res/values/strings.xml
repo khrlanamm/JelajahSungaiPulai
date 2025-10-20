@@ -26,6 +26,11 @@
     <string name="name">Nama</string>
     <string name="email">Email</string>
     <string name="edit_profile">Ubah Profil</string>
+    <string name="role_admin">ADMIN</string>
+    <string name="role_user">PENGGUNA</string>
+
+    <!-- Demografi -->
+    <string name="no_data_available">Tidak ada data tersedia.</string>
 
     <!-- Profil Perangkat -->
     <string-array name="perangkat_nagari_images">

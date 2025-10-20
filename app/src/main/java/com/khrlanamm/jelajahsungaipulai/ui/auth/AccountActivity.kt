@@ -1,8 +1,8 @@
 package com.khrlanamm.jelajahsungaipulai.ui.auth
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -10,24 +10,27 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.credentials.ClearCredentialStateRequest
+import androidx.credentials.CredentialManager
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.databinding.ActivityAccountBinding
+import kotlinx.coroutines.launch
 
 class AccountActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAccountBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var db: FirebaseFirestore
+    private lateinit var credentialManager: CredentialManager
+
+    companion object {
+        private const val TAG = "AccountActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +43,9 @@ class AccountActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Akun Saya"
 
-        // Initialize Firebase Auth and Firestore
-        auth = Firebase.auth
-        db = Firebase.firestore
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+        credentialManager = CredentialManager.create(this)
 
         populateProfileData()
         setupActionListeners()
@@ -66,14 +63,12 @@ class AccountActivity : AppCompatActivity() {
                 .placeholder(R.drawable.ic_profile)
                 .into(binding.profileImage)
 
-            // Check user role from Firestore
             checkUserRole(user.email)
         }
     }
 
     private fun checkUserRole(email: String?) {
         if (email == null) {
-            // Default to user if email is not available
             setupRoleTag(isAdmin = false)
             return
         }
@@ -82,12 +77,10 @@ class AccountActivity : AppCompatActivity() {
             .whereEqualTo("email", email)
             .get()
             .addOnSuccessListener { documents ->
-                // If documents are not empty, user is an admin
                 val isAdmin = !documents.isEmpty
                 setupRoleTag(isAdmin)
             }
-            .addOnFailureListener { exception ->
-                // Handle failure, e.g., log error and default to user
+            .addOnFailureListener {
                 Toast.makeText(this, "Gagal memeriksa status admin.", Toast.LENGTH_SHORT).show()
                 setupRoleTag(isAdmin = false)
             }
@@ -97,26 +90,27 @@ class AccountActivity : AppCompatActivity() {
         with(binding.textRoleTag) {
             visibility = View.VISIBLE
             if (isAdmin) {
-                text = "Admin"
+                // UBAH: Menggunakan string resource
+                text = getString(R.string.role_admin)
                 background = ContextCompat.getDrawable(this@AccountActivity, R.drawable.tag_pink)
             } else {
-                text = "Pengguna"
+                // UBAH: Menggunakan string resource
+                text = getString(R.string.role_user)
                 background = ContextCompat.getDrawable(this@AccountActivity, R.drawable.tag_green)
             }
         }
     }
 
     private fun setupActionListeners() {
-        // Listener untuk tombol Edit Profil
         binding.buttonEditProfile.setOnClickListener {
             showConfirmationDialog(
                 title = "Edit Profil",
                 message = "Anda akan diarahkan ke halaman Akun Google untuk mengedit profil. Lanjutkan?",
                 positiveAction = {
-                    Toast.makeText(this, "Mengarahkan ke Akun Google...", Toast.LENGTH_SHORT).show()
+                    // UBAH: Menggunakan KTX extension .toUri()
                     val intent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://myaccount.google.com/personal-info")
+                        "https://myaccount.google.com/personal-info".toUri()
                     )
                     startActivity(intent)
                 }
@@ -133,13 +127,25 @@ class AccountActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        auth.signOut()
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            Toast.makeText(this, "Anda telah logout", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, AuthActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            finish()
+        lifecycleScope.launch {
+            try {
+                auth.signOut()
+                credentialManager.clearCredentialState(ClearCredentialStateRequest())
+                Log.d(TAG, "Credential state berhasil dibersihkan.")
+                Toast.makeText(this@AccountActivity, "Anda telah logout", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@AccountActivity, AuthActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+                startActivity(intent)
+                finish()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error saat proses logout", e)
+                Toast.makeText(
+                    this@AccountActivity,
+                    "Terjadi kesalahan saat logout.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
@@ -148,9 +154,7 @@ class AccountActivity : AppCompatActivity() {
             .setTitle(title)
             .setMessage(message)
             .setIcon(R.mipmap.ic_launcher)
-            .setPositiveButton("Ya") { _, _ ->
-                positiveAction.invoke()
-            }
+            .setPositiveButton("Ya") { _, _ -> positiveAction.invoke() }
             .setNegativeButton("Tidak", null)
             .show()
     }

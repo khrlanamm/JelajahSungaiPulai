@@ -5,26 +5,36 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.Firebase
+import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
+import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.GetCredentialException
+import androidx.credentials.exceptions.NoCredentialException
+import androidx.lifecycle.lifecycleScope
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
 import com.khrlanamm.jelajahsungaipulai.MainActivity
 import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.databinding.ActivityAuthBinding
+import kotlinx.coroutines.launch
+import java.security.SecureRandom
 
 class AuthActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityAuthBinding
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var credentialManager: CredentialManager
+
+    companion object {
+        private const val TAG = "AuthActivity"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,55 +43,68 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance() // UBAH: Menggunakan getInstance()
+        credentialManager = CredentialManager.create(this)
 
+        // Jika user sudah login, langsung ke MainActivity
         if (auth.currentUser != null) {
             navigateToMain(auth.currentUser)
             return
         }
 
-        configureGoogleSignIn()
-
         binding.buttonGoogleSignIn.setOnClickListener {
-            signIn()
+            signInWithGoogle()
         }
     }
 
-    private fun configureGoogleSignIn() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
+    private fun signInWithGoogle() {
+        updateUI(isLoading = true)
+        val nonce = generateNonce()
+
+        val googleIdOption = GetGoogleIdOption.Builder()
+            .setFilterByAuthorizedAccounts(false)
+            .setServerClientId(getString(R.string.default_web_client_id))
+            .setNonce(nonce)
             .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-    }
 
-    private fun signIn() {
-        updateUI(true) // Tampilkan loading
-        val signInIntent = googleSignInClient.signInIntent
-        googleSignInLauncher.launch(signInIntent)
-    }
+        val request = GetCredentialRequest.Builder()
+            .addCredentialOption(googleIdOption)
+            .build()
 
-    private val googleSignInLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        lifecycleScope.launch {
             try {
-                val account = task.getResult(ApiException::class.java)!!
-                firebaseAuthWithGoogle(account.idToken!!)
-            } catch (e: ApiException) {
-                Log.w("AuthActivity", "Google sign in failed", e)
-                Toast.makeText(this, "Gagal masuk dengan Google: ${e.message}", Toast.LENGTH_SHORT)
-                    .show()
-                updateUI(false) // Sembunyikan loading
+                val result = credentialManager.getCredential(this@AuthActivity, request)
+                val credential = result.credential
+
+                if (credential is CustomCredential &&
+                    credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
+                ) {
+                    try {
+                        val googleIdTokenCredential = GoogleIdTokenCredential.createFrom(credential.data)
+                        val idToken = googleIdTokenCredential.idToken
+                        Log.d(TAG, "Google ID Token berhasil didapatkan.")
+                        firebaseAuthWithGoogle(idToken)
+                    } catch (e: GoogleIdTokenParsingException) {
+                        Log.e(TAG, "Gagal mem-parsing token Google.", e)
+                        Toast.makeText(this@AuthActivity, "Gagal mem-parsing token Google.", Toast.LENGTH_SHORT).show()
+                        updateUI(false)
+                    }
+                } else {
+                    Log.w(TAG, "Tipe kredensial tidak dikenali: ${credential.type}")
+                    Toast.makeText(this@AuthActivity, "Tipe kredensial tidak dikenali.", Toast.LENGTH_SHORT).show()
+                    updateUI(false)
+                }
+
+            } catch (e: GetCredentialException) {
+                Log.w(TAG, "Gagal mendapatkan kredensial.", e)
+                val userMessage = when (e) {
+                    is NoCredentialException -> "Tidak ada akun Google yang ditemukan untuk login."
+                    is GetCredentialCancellationException -> "Proses login dibatalkan."
+                    else -> "Gagal login: ${e.message}"
+                }
+                Toast.makeText(this@AuthActivity, userMessage, Toast.LENGTH_SHORT).show()
+                updateUI(false)
             }
-        } else {
-            Log.w(
-                "AuthActivity",
-                "Google sign in flow cancelled. Result code: ${result.resultCode}"
-            )
-            Toast.makeText(this, "Login dengan Google dibatalkan", Toast.LENGTH_SHORT).show()
-            updateUI(false) // Sembunyikan loading
         }
     }
 
@@ -90,19 +113,12 @@ class AuthActivity : AppCompatActivity() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    Log.d("AuthActivity", "signInWithCredential_firebase:success")
+                    Log.d(TAG, "signInWithCredential_firebase:success")
                     val user = task.result.user
-
-                    // PENAMBAHAN TOAST DI SINI
-                    Toast.makeText(
-                        this,
-                        "Berhasil login sebagai ${user?.displayName}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
+                    Toast.makeText(this, "Berhasil login sebagai ${user?.displayName}", Toast.LENGTH_SHORT).show()
                     navigateToMain(user)
                 } else {
-                    Log.w("AuthActivity", "signInWithCredential_firebase:failure", task.exception)
+                    Log.w(TAG, "signInWithCredential_firebase:failure", task.exception)
                     Toast.makeText(this, "Autentikasi Firebase gagal.", Toast.LENGTH_SHORT).show()
                     updateUI(false)
                 }
@@ -123,5 +139,12 @@ class AuthActivity : AppCompatActivity() {
     private fun updateUI(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.buttonGoogleSignIn.isEnabled = !isLoading
+    }
+
+    private fun generateNonce(length: Int = 16): String {
+        val random = SecureRandom()
+        val bytes = ByteArray(length)
+        random.nextBytes(bytes)
+        return bytes.joinToString("") { "%02x".format(it) }
     }
 }
