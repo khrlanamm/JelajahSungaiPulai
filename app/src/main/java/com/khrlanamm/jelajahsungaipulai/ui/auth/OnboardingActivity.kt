@@ -3,30 +3,40 @@ package com.khrlanamm.jelajahsungaipulai.ui.auth
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.VideoView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.khrlanamm.jelajahsungaipulai.R
 
-@Suppress("DEPRECATION")
 class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        // Implement full screen immersive mode using WindowManager flags
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-
         setContentView(R.layout.activity_onboarding)
+
+        hideSystemUI()
         playVideo()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Memastikan system UI tetap tersembunyi saat activity kembali aktif
+        hideSystemUI()
+    }
+
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.hide(WindowInsetsCompat.Type.systemBars())
+        controller.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     private fun playVideo() {
@@ -36,7 +46,6 @@ class OnboardingActivity : AppCompatActivity() {
 
         videoView.setVideoURI(uri)
 
-        // Use setOnPreparedListener for better control when the video is ready
         videoView.setOnPreparedListener { mediaPlayer ->
             mediaPlayer.start()
         }

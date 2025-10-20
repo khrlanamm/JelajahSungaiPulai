@@ -7,6 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -40,13 +43,27 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance() // UBAH: Menggunakan getInstance()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            view.setPadding(insets.left, insets.top, insets.right, 0)
+
+            val originalMargin = (binding.buttonGoogleSignIn.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
+            val buttonParams = binding.buttonGoogleSignIn.layoutParams as android.view.ViewGroup.MarginLayoutParams
+            buttonParams.bottomMargin = insets.bottom + originalMargin
+            binding.buttonGoogleSignIn.layoutParams = buttonParams
+
+            WindowInsetsCompat.CONSUMED
+        }
+
+        auth = FirebaseAuth.getInstance()
         credentialManager = CredentialManager.create(this)
 
-        // Jika user sudah login, langsung ke MainActivity
         if (auth.currentUser != null) {
             navigateToMain(auth.currentUser)
             return

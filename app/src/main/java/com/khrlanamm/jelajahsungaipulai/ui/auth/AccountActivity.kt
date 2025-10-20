@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.credentials.ClearCredentialStateRequest
 import androidx.credentials.CredentialManager
 import androidx.lifecycle.lifecycleScope
@@ -36,8 +39,33 @@ class AccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        // 1. Membuat layout menjadi edge-to-edge
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // 2. Menerapkan padding dan margin secara manual
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            // Menambahkan padding atas pada App Bar
+            binding.appbar.setPadding(insets.left, insets.top, insets.right, 0)
+
+            // Menambahkan margin bawah pada kedua tombol di bagian bawah
+            val originalMargin = (binding.buttonLogout.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
+
+            val logoutLayoutParams = binding.buttonLogout.layoutParams as android.view.ViewGroup.MarginLayoutParams
+            logoutLayoutParams.bottomMargin = insets.bottom + originalMargin
+            binding.buttonLogout.layoutParams = logoutLayoutParams
+
+            val editLayoutParams = binding.buttonEditProfile.layoutParams as android.view.ViewGroup.MarginLayoutParams
+            editLayoutParams.bottomMargin = insets.bottom + originalMargin
+            binding.buttonEditProfile.layoutParams = editLayoutParams
+
+            WindowInsetsCompat.CONSUMED
+        }
+
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
