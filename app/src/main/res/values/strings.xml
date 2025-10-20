@@ -118,6 +118,9 @@
     <!-- Fragment Penduduk -->
     <string name="penduduk_toolbar_title">Data Penduduk</string>
     <string name="penduduk_no_data_found">Tidak ada data penduduk ditemukan.</string>
+    <string name="nama_format">Nama: %1$s</string>
+    <string name="nik_format">NIK: %1$s</string>
+    <string name="rt_kampung_format">RT: %1$s, Kampung: %2$s</string>
 
     <!-- Dialog Access Denied -->
     <string name="penduduk_access_denied_title">Akses Ditolak</string>
