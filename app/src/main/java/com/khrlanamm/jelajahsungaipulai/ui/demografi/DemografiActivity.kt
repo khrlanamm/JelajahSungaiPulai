@@ -11,6 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.databinding.ActivityDemografiBinding
@@ -30,8 +33,21 @@ class DemografiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         binding = ActivityDemografiBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            view.setPadding(insets.left, 0, insets.right, 0)
+            binding.appbar.setPadding(0, insets.top, 0, 0)
+            binding.scrollView.setPadding(0, 0, 0, insets.bottom)
+            binding.progressBar.setPadding(0, 0, 0, insets.bottom)
+
+            WindowInsetsCompat.CONSUMED
+        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -41,7 +57,6 @@ class DemografiActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // UBAH: Inisialisasi ViewModel lebih ringkas dengan operator []
         demografiViewModel = ViewModelProvider(this)[DemografiViewModel::class.java]
 
         val rawKampungFilter = intent.getStringExtra(KAMPUNG_FILTER_EXTRA)
@@ -140,7 +155,7 @@ class DemografiActivity : AppCompatActivity() {
         }
 
         data.forEach { (label, count) ->
-            if (label.isEmpty()) return@forEach // Skip jika label kosong
+            if (label.isEmpty()) return@forEach
 
             val rowLayout = LinearLayout(this).apply {
                 layoutParams = LinearLayout.LayoutParams(

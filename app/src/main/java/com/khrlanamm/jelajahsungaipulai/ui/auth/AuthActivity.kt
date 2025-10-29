@@ -48,16 +48,9 @@ class AuthActivity : AppCompatActivity() {
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
-
-            view.setPadding(insets.left, insets.top, insets.right, 0)
-
-            val originalMargin = (binding.buttonGoogleSignIn.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
-            val buttonParams = binding.buttonGoogleSignIn.layoutParams as android.view.ViewGroup.MarginLayoutParams
-            buttonParams.bottomMargin = insets.bottom + originalMargin
-            binding.buttonGoogleSignIn.layoutParams = buttonParams
-
+            view.setPadding(insets.left, insets.top, insets.right, insets.bottom)
             WindowInsetsCompat.CONSUMED
         }
 

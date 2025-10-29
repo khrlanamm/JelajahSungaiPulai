@@ -39,20 +39,16 @@ class AccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        // 1. Membuat layout menjadi edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding = ActivityAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // 2. Menerapkan padding dan margin secara manual
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { _, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
-            // Menambahkan padding atas pada App Bar
             binding.appbar.setPadding(insets.left, insets.top, insets.right, 0)
 
-            // Menambahkan margin bawah pada kedua tombol di bagian bawah
             val originalMargin = (binding.buttonLogout.layoutParams as? android.view.ViewGroup.MarginLayoutParams)?.bottomMargin ?: 0
 
             val logoutLayoutParams = binding.buttonLogout.layoutParams as android.view.ViewGroup.MarginLayoutParams
@@ -118,11 +114,9 @@ class AccountActivity : AppCompatActivity() {
         with(binding.textRoleTag) {
             visibility = View.VISIBLE
             if (isAdmin) {
-                // UBAH: Menggunakan string resource
                 text = getString(R.string.role_admin)
                 background = ContextCompat.getDrawable(this@AccountActivity, R.drawable.tag_pink)
             } else {
-                // UBAH: Menggunakan string resource
                 text = getString(R.string.role_user)
                 background = ContextCompat.getDrawable(this@AccountActivity, R.drawable.tag_green)
             }
@@ -135,7 +129,6 @@ class AccountActivity : AppCompatActivity() {
                 title = "Edit Profil",
                 message = "Anda akan diarahkan ke halaman Akun Google untuk mengedit profil. Lanjutkan?",
                 positiveAction = {
-                    // UBAH: Menggunakan KTX extension .toUri()
                     val intent = Intent(
                         Intent.ACTION_VIEW,
                         "https://myaccount.google.com/personal-info".toUri()
