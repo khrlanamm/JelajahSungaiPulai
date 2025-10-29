@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JelajahSungaiPulai">
         <activity
+            android:name=".ui.perangkat.PerangkatActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.demografi.DemografiActivity"
             android:exported="false" />
         <activity

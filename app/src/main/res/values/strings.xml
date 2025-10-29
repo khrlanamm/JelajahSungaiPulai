@@ -114,6 +114,7 @@
     <string name="content_desc_perangkat_nagari">Perangkat Nagari Sungai Pulai</string>
     <string name="dialog_header_struktur">Struktur Perangkat Nagari</string>
     <string name="dialog_header_kepala_kampung">Kepala Kampung</string>
+    <string name="title_activity_perangkat">Profil Perangkat Nagari</string>
 
     <!-- Fragment Penduduk -->
     <string name="penduduk_toolbar_title">Data Penduduk</string>

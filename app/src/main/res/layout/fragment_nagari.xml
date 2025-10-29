@@ -98,9 +98,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="80dp"> <!-- Increased paddingBottom to account for bottom navigation bar -->
+            android:paddingBottom="80dp">
 
-            <!-- Card: Profil Perangkat Nagari -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_profil_perangkat"
                 android:layout_width="match_parent"
