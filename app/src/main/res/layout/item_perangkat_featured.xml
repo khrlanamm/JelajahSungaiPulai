@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivFotoPerangkat"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
+            tools:src="@drawable/perangkat_1" />
+
+        <TextView
+            android:id="@+id/tvNamaPerangkat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textStyle="bold"
+            tools:text="PUJIYONO" />
+
+        <TextView
+            android:id="@+id/tvJabatanPerangkat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_horizontal"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="?android:textColorSecondary"
+            tools:text="Wali Nagari" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

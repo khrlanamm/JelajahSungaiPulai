@@ -3,12 +3,14 @@ package com.khrlanamm.jelajahsungaipulai.ui.perangkat
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
@@ -24,8 +26,20 @@ class PerangkatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         binding = ActivityPerangkatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+
+            view.setPadding(insets.left, 0, insets.right, 0)
+            binding.appbar.setPadding(0, insets.top, 0, 0)
+            binding.scrollView.setPadding(0, 0, 0, insets.bottom)
+
+            WindowInsetsCompat.CONSUMED
+        }
 
         setupToolbar()
         setupPerangkatList()
@@ -39,7 +53,9 @@ class PerangkatActivity : AppCompatActivity() {
         supportActionBar?.apply {
             title = getString(R.string.title_activity_perangkat)
             setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
+        }
+        binding.toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
@@ -56,7 +72,7 @@ class PerangkatActivity : AppCompatActivity() {
         val perangkatNama = resources.getStringArray(R.array.perangkat_nagari_nama)
 
         for (i in perangkatNama.indices) {
-            val imageResId = perangkatImagesArray.getResourceId(i, R.drawable.ic_profile) // Fallback ke ic_profile
+            val imageResId = perangkatImagesArray.getResourceId(i, R.drawable.ic_profile)
             val perangkat = Perangkat(
                 perangkatNama[i],
                 perangkatJabatan[i],
@@ -69,10 +85,21 @@ class PerangkatActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         perangkatAdapter = PerangkatAdapter(listPerangkat)
+
+        val layoutManager = GridLayoutManager(this@PerangkatActivity, 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when (perangkatAdapter.getItemViewType(position)) {
+                    PerangkatAdapter.VIEW_TYPE_FEATURED -> 2
+                    PerangkatAdapter.VIEW_TYPE_GRID -> 1
+                    else -> 1
+                }
+            }
+        }
+
         binding.rvPerangkat.apply {
-            layoutManager = LinearLayoutManager(this@PerangkatActivity)
+            this.layoutManager = layoutManager
             adapter = perangkatAdapter
-            // Optimasi jika ukuran item tetap
             setHasFixedSize(true)
         }
     }
@@ -111,14 +138,5 @@ class PerangkatActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int {
         return (this * resources.displayMetrics.density + 0.5f).toInt()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle panah kembali di toolbar
-        if (item.itemId == android.R.id.home) {
-            onBackPressedDispatcher.onBackPressed()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 }
