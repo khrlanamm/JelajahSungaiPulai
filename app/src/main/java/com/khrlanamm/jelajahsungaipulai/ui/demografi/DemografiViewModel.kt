@@ -97,45 +97,55 @@ class DemografiViewModel : ViewModel() {
 
     private fun calculateDemographics(wargaList: List<Warga>) {
         _totalPenduduk.value = wargaList.size
-        _totalKepalaKeluarga.value = wargaList.count { it.hubKeluarga == "Kepala Keluarga" }
-        _totalLakiLaki.value = wargaList.count { it.jenisKel == "L" }
-        _totalPerempuan.value = wargaList.count { it.jenisKel == "P" }
+
+        _totalKepalaKeluarga.value = wargaList.count { w ->
+            w.hubKeluarga?.trim()?.equals("Kepala Keluarga", ignoreCase = true) == true
+        }
+
+        _totalLakiLaki.value = wargaList.count { w ->
+            w.jenisKel?.trim()?.uppercase() == "L"
+        }
+
+        _totalPerempuan.value = wargaList.count { w ->
+            w.jenisKel?.trim()?.uppercase() == "P"
+        }
 
         val ageGroups = mutableMapOf(
             "0-5 Tahun" to 0, "6-12 Tahun" to 0, "13-18 Tahun" to 0,
             "19-30 Tahun" to 0, "31-50 Tahun" to 0, "51+ Tahun" to 0
         )
-        for (warga in wargaList) {
-            warga.tglLahir?.toDate()?.let { birthDate ->
-                val age = getAge(birthDate) // UBAH: Gunakan fungsi getAge
-                when {
-                    age in 0..5 -> ageGroups["0-5 Tahun"] = ageGroups.getValue("0-5 Tahun") + 1
-                    age in 6..12 -> ageGroups["6-12 Tahun"] = ageGroups.getValue("6-12 Tahun") + 1
-                    age in 13..18 -> ageGroups["13-18 Tahun"] = ageGroups.getValue("13-18 Tahun") + 1
-                    age in 19..30 -> ageGroups["19-30 Tahun"] = ageGroups.getValue("19-30 Tahun") + 1
-                    age in 31..50 -> ageGroups["31-50 Tahun"] = ageGroups.getValue("31-50 Tahun") + 1
-                    age > 50 -> ageGroups["51+ Tahun"] = ageGroups.getValue("51+ Tahun") + 1
-                }
+
+        for (w in wargaList) {
+            val ts = w.tglLahir
+            val birthDate = ts?.toDate() ?: continue
+            val age = getAge(birthDate)
+
+            when {
+                age in 0..5   -> ageGroups["0-5 Tahun"] = ageGroups.getValue("0-5 Tahun") + 1
+                age in 6..12  -> ageGroups["6-12 Tahun"] = ageGroups.getValue("6-12 Tahun") + 1
+                age in 13..18 -> ageGroups["13-18 Tahun"] = ageGroups.getValue("13-18 Tahun") + 1
+                age in 19..30 -> ageGroups["19-30 Tahun"] = ageGroups.getValue("19-30 Tahun") + 1
+                age in 31..50 -> ageGroups["31-50 Tahun"] = ageGroups.getValue("31-50 Tahun") + 1
+                age > 50      -> ageGroups["51+ Tahun"] = ageGroups.getValue("51+ Tahun") + 1
             }
         }
         _ageGroupData.value = ageGroups
 
-        // Kalkulasi lainnya tidak perlu diubah, hanya pastikan menggunakan nama properti baru
-        _educationData.value = wargaList.groupingBy { it.pendidikan.orEmpty() }.eachCount().toSortedMap()
-        _occupationData.value = wargaList.groupingBy { it.pekerjaan.orEmpty() }.eachCount().toSortedMap()
-        _maritalStatusData.value = wargaList.groupingBy { it.status.orEmpty() }.eachCount()
-        _religionData.value = wargaList.groupingBy { it.agama.orEmpty() }.eachCount()
+        _educationData.value = wargaList.groupingBy { it.pendidikan.orEmpty().trim() }.eachCount().toSortedMap()
+        _occupationData.value = wargaList.groupingBy { it.pekerjaan.orEmpty().trim() }.eachCount().toSortedMap()
+        _maritalStatusData.value = wargaList.groupingBy { it.status.orEmpty().trim() }.eachCount()
+        _religionData.value = wargaList.groupingBy { it.agama.orEmpty().trim() }.eachCount()
 
         val kampungRtCounts = mutableMapOf<String, Int>()
         if (currentFilter.value == null) {
-            for (warga in wargaList) {
-                warga.kampung?.let { kampung ->
+            for (w in wargaList) {
+                w.kampung?.trim()?.takeIf { it.isNotEmpty() }?.let { kampung ->
                     kampungRtCounts[kampung] = kampungRtCounts.getOrDefault(kampung, 0) + 1
                 }
             }
         } else {
-            for (warga in wargaList) {
-                warga.rt?.let { rt ->
+            for (w in wargaList) {
+                w.rt?.let { rt ->
                     val rtLabel = "RT $rt"
                     kampungRtCounts[rtLabel] = kampungRtCounts.getOrDefault(rtLabel, 0) + 1
                 }
@@ -143,4 +153,5 @@ class DemografiViewModel : ViewModel() {
         }
         _kampungRtData.value = kampungRtCounts.toSortedMap()
     }
+
 }

@@ -56,9 +56,9 @@
 
     <!-- Demografi -->
     <string name="no_data_available">Tidak ada data tersedia.</string>
-    <string name="demografi_header_jumlah">Jumlah Penduduk dan Kepala Keluarga</string>
+    <string name="demografi_header_jumlah">Statistik Penduduk dan Keluarga</string>
     <string name="demografi_label_total_penduduk">Total Penduduk</string>
-    <string name="demografi_label_kepala_keluarga">Kepala Keluarga</string>
+    <string name="demografi_label_kepala_keluarga">Jumlah Keluarga</string>
     <string name="demografi_label_laki_laki">Laki-Laki</string>
     <string name="demografi_label_perempuan">Perempuan</string>
     <string name="demografi_header_kelompok_umur">Berdasarkan Kelompok Umur</string>
