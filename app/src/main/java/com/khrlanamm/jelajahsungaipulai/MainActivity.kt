@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.khrlanamm.jelajahsungaipulai.databinding.ActivityMainBinding
+import com.khrlanamm.jelajahsungaipulai.logger.ActivityLogger
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ActivityLogger.recordAppOpen()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.container) { view, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())

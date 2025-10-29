@@ -18,7 +18,6 @@ import com.khrlanamm.jelajahsungaipulai.R
 import com.khrlanamm.jelajahsungaipulai.databinding.FragmentNagariBinding
 import com.khrlanamm.jelajahsungaipulai.ui.auth.AccountActivity
 import com.khrlanamm.jelajahsungaipulai.ui.demografi.DemografiActivity
-// --- PERUBAHAN --- Import PerangkatActivity
 import com.khrlanamm.jelajahsungaipulai.ui.perangkat.PerangkatActivity
 
 class NagariFragment : Fragment() {
