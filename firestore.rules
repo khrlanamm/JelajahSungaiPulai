@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// Deploy: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    // Admin terdaftar di admins/{email}, dengan ID dokumen = email huruf kecil.
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(database)/documents/admins/$(request.auth.token.email.lower()));
+    }
+
+    // Pengguna hanya boleh membaca dokumen admin miliknya sendiri,
+    // cukup untuk query whereEqualTo("email", emailSaya) di aplikasi.
+    match /admins/{id} {
+      allow read: if signedIn() && resource.data.email == request.auth.token.email;
+      allow write: if false;
+    }
+
+    // Data pribadi warga (NIK, No KK, tanggal lahir): hanya admin.
+    match /penduduk/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Ringkasan tanpa data pribadi untuk layar Demografi, ditulis aplikasi admin.
+    match /statistik/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /agama/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /kampung/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /pekerjaan/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    // Catatan terakhir membuka aplikasi (ActivityLogger), satu dokumen per pengguna.
+    match /activity/{uid} {
+      allow create, update: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['email', 'last_opened']);
+      allow read: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
