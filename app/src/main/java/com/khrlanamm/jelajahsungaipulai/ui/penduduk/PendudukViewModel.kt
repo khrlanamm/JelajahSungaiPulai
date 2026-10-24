@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FieldValue
 import com.khrlanamm.jelajahsungaipulai.data.Penduduk // Import kelas Penduduk dari folder data
+import com.khrlanamm.jelajahsungaipulai.data.StatistikPublisher
+import com.khrlanamm.jelajahsungaipulai.data.Warga
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -78,6 +80,8 @@ class PendudukViewModel : ViewModel() {
                 }
                 _pendudukList.postValue(list)
                 _filteredPendudukList.postValue(list) // Awalnya, daftar yang difilter sama dengan daftar asli
+                // Warga biasa membaca ringkasan ini, bukan koleksi penduduk
+                StatistikPublisher.publish(db, result.toObjects(Warga::class.java))
             }
             .addOnFailureListener { exception ->
                 // Tangani kesalahan (misalnya, log, tampilkan pesan toast)
