@@ -1,10 +1,18 @@
 # Jelajah Sungai Pulai
 
+[![CI](https://github.com/khrlanamm/JelajahSungaiPulai/actions/workflows/ci.yml/badge.svg)](https://github.com/khrlanamm/JelajahSungaiPulai/actions/workflows/ci.yml)
+
 ![Jelajah Sungai Pulai feature graphic](https://raw.githubusercontent.com/khrlanamm/khrlanamm/main/assets/projects/jelajah-sungai-pulai.webp)
 
 Village profile app for Nagari Sungai Pulai, West Sumatra. Built during KKN-PPM UGM 2025, tested by 20 residents over 14 days, and handed over to the village.
 
 [Google Play](https://play.google.com/store/apps/details?id=com.khrlanamm.jelajahsungaipulai)
+
+## Screenshots
+
+| Nagari home | Kampung maps | Resident data |
+|---|---|---|
+| <img src="docs/images/home.webp" alt="Home screen with the village profile menu and the Nagari Sungai Pulai boundary map" width="220"> | <img src="docs/images/kampung.webp" alt="Kampung list with the boundary map of each kampung" width="220"> | <img src="docs/images/admin-only.webp" alt="Resident data screen refusing access to a user who is not an admin" width="220"> |
 
 ## Features
 
